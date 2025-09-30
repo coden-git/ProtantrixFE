@@ -4,6 +4,9 @@ import AlertsScreen from './alerts/AlertsScreen';
 import LoginScreen from './login/LoginScreen';
 import ProfileScreen from './profile/ProfileScreen';
 import ActivitiesScreen from './activities/ActivitiesScreen';
+import AddPo from './AddPo';
+import ActivityDocs from './ActivityDocs';
+import Measurements from './Measurements';
 
 
 export  {
@@ -12,4 +15,7 @@ export  {
 	LoginScreen,
 	ProfileScreen,
 	ActivitiesScreen,
+	AddPo,
+	ActivityDocs,
+	Measurements,
 };

@@ -6,7 +6,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import Tabs from './navigation/Tabs';
 import React, { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ActivitiesScreen } from './pages';
+import { ActivitiesScreen, ActivityDocs, AddPo, Measurements } from './pages';
+import ActivityDetail from './pages/activities/ActivityDetail';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -22,6 +23,10 @@ export default function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Tabs" component={Tabs} />
             <Stack.Screen name="Activities" component={ActivitiesScreen} />
+            <Stack.Screen name="ActivityDetail" component={ActivityDetail} />
+            <Stack.Screen name="AddPo" component={AddPo} />
+            <Stack.Screen name="Measurements" component={Measurements} />
+            <Stack.Screen name="ActivityDocs" component={ActivityDocs} />
           </Stack.Navigator>
         </NavigationContainer>
       )}
@@ -32,6 +37,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
+    marginTop: 30,
   },
 });
