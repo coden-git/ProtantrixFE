@@ -9,7 +9,27 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const Login = () => {
+import { useState } from 'react';
+
+const Login = ({ onLoginSuccess }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  function handleLogin() {
+    setError('');
+    // simple local validation; replace with real auth as needed
+    if (!username.trim() || !password.trim()) {
+      setError('Please enter both username and password');
+      return;
+    }
+
+    // Here you'd call your backend/auth logic. For now assume success.
+    if (typeof onLoginSuccess === 'function') {
+      onLoginSuccess();
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Image
@@ -17,14 +37,25 @@ const Login = () => {
         style={styles.logo}
       />
       <Text style={styles.label}>Username</Text>
-      <TextInput style={styles.input} placeholder="Enter your username" />
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your username"
+        value={username}
+        onChangeText={setUsername}
+        autoCapitalize="none"
+      />
       <Text style={styles.label}>Password</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter your password"
         secureTextEntry
+        value={password}
+        onChangeText={setPassword}
       />
-      <TouchableOpacity style={styles.button}>
+
+      {error ? <Text style={{ color: 'red', marginBottom: 10 }}>{error}</Text> : null}
+
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>
