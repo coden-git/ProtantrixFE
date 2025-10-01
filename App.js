@@ -8,10 +8,11 @@ import React, { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActivitiesScreen, ActivityDocs, AddPo, Measurements } from './pages';
 import ActivityDetail from './pages/activities/ActivityDetail';
+import colors from './styles/colorPallete';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [signedIn, setSignedIn] = useState(false);
+  const [signedIn, setSignedIn] = useState(true);
 
   return (
     <View style={styles.container}>
@@ -37,7 +38,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.fullwhite,
     marginTop: 30,
   },
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import colors from '../../styles/colorPallete';
 
 const Header = ({ title, enableBackButton }) => {
     const navigation = useNavigation();
@@ -10,7 +11,7 @@ const Header = ({ title, enableBackButton }) => {
         <View style={styles.header}>
             {enableBackButton && (
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={22} color="#000000" />
+                    <Ionicons name="arrow-back" size={22} color={colors.fullBlack} />
                 </TouchableOpacity>
             )}
             <Text style={styles.title}>{title}</Text>

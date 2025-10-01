@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import colors from '../../styles/colorPallete';
 
 export default function Checkbox({ label, value = false, onClick }) {
   return (
     <Pressable onPress={() => onClick && onClick(!value)} style={styles.row}>
       <View style={styles.box}>
-        {value ? <Ionicons name="checkmark" size={14} color="#000000" /> : null}
+        {value ? <Ionicons name="checkmark" size={14} color={colors.b} /> : null}
       </View>
       {label ? <Text style={styles.label}>{label}</Text> : null}
     </Pressable>
@@ -15,6 +16,6 @@ export default function Checkbox({ label, value = false, onClick }) {
 
 const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', width: '100%' },
-  box: { width: 15, height: 15, borderRadius: 4, borderColor: '#027aaaff', borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: 1 },
+  box: { width: 15, height: 15, borderRadius: 4, borderColor: colors.primary, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: 1 },
   label: { marginLeft: 10, fontSize: 16 },
 });

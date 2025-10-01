@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import colors from '../../styles/colorPallete';
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   buttonText: {
-    color: '#fff',
+    color: colors.fullwhite,
     fontWeight: '600',
   },
 });

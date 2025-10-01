@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import { useState } from 'react';
+import colors from '../../styles/colorPallete';
 
 const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
@@ -65,7 +66,7 @@ const Login = ({ onLoginSuccess }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.fullwhite,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -79,13 +80,13 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginLeft: '10%',
     fontSize: 16,
-    color: '#333',
+    color: colors.fullBlack,
     marginBottom: 5,
   },
   input: {
     width: '80%',
     height: 50,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.offWhite,
     borderRadius: 10,
     paddingHorizontal: 15,
     marginBottom: 20,
@@ -96,13 +97,13 @@ const styles = StyleSheet.create({
     bottom: 40,
     width: '80%',
     height: 50,
-    backgroundColor: '#5f9ea0',
+    backgroundColor: colors.primary,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: colors.fullwhite,
     fontSize: 18,
   },
 });

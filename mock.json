@@ -11,55 +11,64 @@
                     "name": "Soil test report",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Site survey",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Structural drawings",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "Statutory permissions",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 },
                 {
                     "name": "Plan and elevation",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 5
                 },
                 {
                     "name": "EHS work permits",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 6
                 },
                 {
                     "name": "pvcPlumbing and electrical drawing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 7
                 },
                 {
                     "name": "BOQ - Bill of quantities",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 8
                 },
                 {
                     "name": "Project schedule",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 9
                 },
                 {
                     "name": "QMS Document upload",
@@ -69,7 +78,8 @@
                         "application/pdf",
                         "image/*"
                     ],
-                    "value": ""
+                    "value": "",
+                    "id": 10
                 },
                 {
                     "name": "Warranty certificates upload",
@@ -79,13 +89,14 @@
                         "application/pdf",
                         "image/*"
                     ],
-                    "value": ""
+                    "value": "",
+                    "id": 11
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 0
         },
@@ -97,14 +108,15 @@
                     "name": "Drawing Dimension check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "poTrigger": null,
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 1
         },
@@ -117,13 +129,14 @@
                     "name": "Road/FFL level check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 2
         },
@@ -147,7 +160,8 @@
                     "name": "Level check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
@@ -215,7 +229,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 3
         },
@@ -239,7 +254,8 @@
                     "name": "Level check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Mixing ratio",
@@ -259,13 +275,15 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 2
                 },
                 {
                     "name": "Curing (3 days)",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -333,7 +351,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 4
         },
@@ -351,19 +370,22 @@
                     "name": "Dimension check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Rust check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Cover Block check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -413,7 +435,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 5
         },
@@ -431,13 +454,15 @@
                     "name": "Plumb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
@@ -487,7 +512,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 6
         },
@@ -505,13 +531,15 @@
                     "name": "Plumb and alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Concrete cover",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
@@ -557,7 +585,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 7
         },
@@ -581,25 +610,29 @@
                     "name": "Vibrator",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Honey comb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Curing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 3
                 },
                 {
                     "name": "Cube cast",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 },
                 {
                     "name": "Cube test",
@@ -681,7 +714,8 @@
                                 "value": ""
                             }
                         ]
-                    ]
+                    ],
+                    "id": 5
                 },
                 {
                     "name": "Mixing ratio",
@@ -701,7 +735,8 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 6
                 }
             ],
             "measurement": {
@@ -769,7 +804,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 8
         },
@@ -781,13 +817,14 @@
                     "name": "Dimension check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 9
         },
@@ -805,7 +842,8 @@
                     "name": "Cover and plumb check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
@@ -851,7 +889,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 10
         },
@@ -889,25 +928,29 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 1
                 },
                 {
                     "name": "Vibrator",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Honey comb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "Cube cast",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 },
                 {
                     "name": "Cube test",
@@ -989,13 +1032,15 @@
                                 "value": ""
                             }
                         ]
-                    ]
+                    ],
+                    "id": 5
                 },
                 {
                     "name": "Curing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 6
                 }
             ],
             "measurement": {
@@ -1063,7 +1108,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 11
         },
@@ -1081,7 +1127,8 @@
                     "name": "600 mm per fill with compactor",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
@@ -1135,6 +1182,7 @@
                         }
                     ]
                 ],
+                "type": "table",
                 "finalTotal": "total"
             },
             "id": 12
@@ -1159,7 +1207,8 @@
                     "name": "Mud mix",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Mixing ratio",
@@ -1179,13 +1228,15 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 2
                 },
                 {
                     "name": "Curing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -1253,7 +1304,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 13
         },
@@ -1270,25 +1322,29 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Dimension check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Level check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "Curing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 4
                 },
                 {
                     "name": "Mortar Ratio",
@@ -1306,7 +1362,8 @@
                             "value": "1:7",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 5
                 }
             ],
             "measurement": {
@@ -1360,6 +1417,7 @@
                         }
                     ]
                 ],
+                "type": "table",
                 "finalTotal": "total"
             },
             "id": 14
@@ -1384,7 +1442,8 @@
                     "name": "Level Check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Mixing ratio",
@@ -1404,13 +1463,15 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 2
                 },
                 {
                     "name": "Curing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -1478,7 +1539,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 15
         },
@@ -1496,19 +1558,22 @@
                     "name": "Dimension check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Rust check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -1558,7 +1623,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 16
         },
@@ -1576,13 +1642,15 @@
                     "name": "Plumb and alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Concrete cover",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
@@ -1628,7 +1696,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 17
         },
@@ -1666,25 +1735,29 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 1
                 },
                 {
                     "name": "Vibrator",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Honey comb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "Cube test",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 },
                 {
                     "name": "Cube test",
@@ -1766,13 +1839,15 @@
                                 "value": ""
                             }
                         ]
-                    ]
+                    ],
+                    "id": 5
                 },
                 {
                     "name": "Curing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 6
                 }
             ],
             "measurement": {
@@ -1840,7 +1915,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 18
         },
@@ -1857,13 +1933,14 @@
                     "name": "Compaction for 6 days",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 19
         },
@@ -1887,19 +1964,22 @@
                     "name": "Position check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Slope test",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "End Caps",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "Leak test",
@@ -1934,7 +2014,8 @@
                                 "value": ""
                             }
                         ]
-                    ]
+                    ],
+                    "id": 4
                 }
             ],
             "measurement": {
@@ -1975,7 +2056,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 20
         },
@@ -1993,7 +2075,8 @@
                     "name": "Compaction",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
@@ -2047,6 +2130,7 @@
                         }
                     ]
                 ],
+                "type": "table",
                 "finalTotal": "total"
             },
             "id": 21
@@ -2065,13 +2149,15 @@
                     "name": "Quantity",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Rain Proof",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
@@ -2117,7 +2203,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 22
         },
@@ -2134,13 +2221,15 @@
                     "name": "Level check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "compaction",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
@@ -2194,6 +2283,7 @@
                         }
                     ]
                 ],
+                "type": "table",
                 "finalTotal": "total"
             },
             "id": 23
@@ -2228,13 +2318,15 @@
                     "name": "Block wetting",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "plumb and right angle",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Mortar Ratio",
@@ -2252,7 +2344,8 @@
                             "value": "1:7",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 3
                 }
             ],
             "id": 24
@@ -2287,13 +2380,15 @@
                     "name": "Block wetting",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "plumb and right angle",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Mortar Ratio",
@@ -2311,7 +2406,8 @@
                             "value": "1:7",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -2379,7 +2475,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 25
         },
@@ -2397,13 +2494,15 @@
                     "name": "Block wetting",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "plumb and right angle",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Mortar Ratio",
@@ -2421,7 +2520,8 @@
                             "value": "1:7",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -2467,7 +2567,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 26
         },
@@ -2491,19 +2592,22 @@
                     "name": "Vibrator",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Honey comb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Curing 7days",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 3
                 },
                 {
                     "name": "Mixing ratio",
@@ -2523,7 +2627,8 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 4
                 }
             ],
             "measurement": {
@@ -2591,7 +2696,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 27
         },
@@ -2615,19 +2721,22 @@
                     "name": "Vibrator",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Honey comb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Curing 7days",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 3
                 },
                 {
                     "name": "Mixing ratio",
@@ -2647,7 +2756,8 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 4
                 }
             ],
             "measurement": {
@@ -2715,7 +2825,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 28
         },
@@ -2733,19 +2844,22 @@
                     "name": "Gaps and levels",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Beam verticals",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Level check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -2791,7 +2905,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 29
         },
@@ -2809,19 +2924,22 @@
                     "name": "Cover blocks",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Chair laying",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Dimension check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -2871,7 +2989,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 30
         },
@@ -2893,37 +3012,43 @@
                     "name": "Conduit quality check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Seemless routing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Cover blocks",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "Thermocol placement",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 },
                 {
                     "name": "Conduit damage check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 5
                 },
                 {
                     "name": "Dimension check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 6
                 }
             ],
             "measurement": {
@@ -2962,7 +3087,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 31
         },
@@ -2986,19 +3112,22 @@
                     "name": "Vibrator",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Honey comb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Curing 15days",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 3
                 },
                 {
                     "name": "Mixing ratio",
@@ -3018,13 +3147,15 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 4
                 },
                 {
                     "name": "Cube cast",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 5
                 },
                 {
                     "name": "Cube test",
@@ -3106,7 +3237,8 @@
                                 "value": ""
                             }
                         ]
-                    ]
+                    ],
+                    "id": 6
                 }
             ],
             "measurement": {
@@ -3174,7 +3306,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 32
         },
@@ -3198,19 +3331,22 @@
                     "name": "Vibrator",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Honey comb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Curing 15days",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 3
                 },
                 {
                     "name": "Mixing ratio",
@@ -3230,13 +3366,15 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 4
                 },
                 {
                     "name": "Cube cast",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 5
                 },
                 {
                     "name": "Cube test",
@@ -3318,13 +3456,15 @@
                                 "value": ""
                             }
                         ]
-                    ]
+                    ],
+                    "id": 6
                 },
                 {
                     "name": "L-Flashing and expansion joints",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 7
                 }
             ],
             "measurement": {
@@ -3392,7 +3532,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 33
         },
@@ -3430,13 +3571,15 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 1
                 },
                 {
                     "name": "Lapping check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
@@ -3504,7 +3647,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 34
         },
@@ -3522,13 +3666,14 @@
                     "name": "Honey comb check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 35
         },
@@ -3550,13 +3695,15 @@
                         "to": "",
                         "from": ""
                     },
-                    "validation": 10
+                    "validation": 10,
+                    "id": 1
                 },
                 {
                     "name": "Screed slope check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
@@ -3602,7 +3749,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 36
         },
@@ -3624,19 +3772,22 @@
                     "name": "Chasing depth",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Positioning and dimensions",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Positioning and dimensions",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -3675,7 +3826,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 37
         },
@@ -3697,19 +3849,22 @@
                     "name": "Spirit level",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Screw fixing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Surface level",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -3748,7 +3903,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 38
         },
@@ -3798,7 +3954,8 @@
                                 }
                             ]
                         ],
-                        "finalTotal": "name"
+                        "finalTotal": "name",
+                        "type": "table"
                     }
                 }
             ],
@@ -3809,13 +3966,15 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "plumb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": "SAME_AS_PO",
@@ -3893,13 +4052,15 @@
                                 "value": ""
                             }
                         ]
-                    ]
+                    ],
+                    "id": 1
                 },
                 {
                     "name": "slope check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
@@ -3940,7 +4101,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 40
         },
@@ -3958,37 +4120,43 @@
                     "name": "Surface finish",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "mortar ratio",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "mesh on joints",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "right angle",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 },
                 {
                     "name": "plumb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 5
                 },
                 {
                     "name": "curing for 7 days",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 6
                 }
             ],
             "measurement": {
@@ -4034,7 +4202,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 41
         },
@@ -4052,37 +4221,43 @@
                     "name": "Rust check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "bend check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "weighment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 },
                 {
                     "name": "Welding finish",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 5
                 },
                 {
                     "name": "buffing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 6
                 }
             ],
             "measurement": {
@@ -4128,7 +4303,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 42
         },
@@ -4140,13 +4316,14 @@
                     "name": "surface finish",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 43
         },
@@ -4158,19 +4335,21 @@
                     "name": "Dimension check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Curing 7 days",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 2
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 44
         },
@@ -4258,13 +4437,15 @@
                                 "value": ""
                             }
                         ]
-                    ]
+                    ],
+                    "id": 1
                 },
                 {
                     "name": "Level check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
@@ -4305,7 +4486,8 @@
                         }
                     ]
                 ],
-                "finalTotal": false
+                "finalTotal": false,
+                "type": "table"
             },
             "id": 45
         },
@@ -4327,19 +4509,22 @@
                         "to": "",
                         "from": ""
                     },
-                    "validation": 7
+                    "validation": 7,
+                    "id": 1
                 },
                 {
                     "name": "Leak Test for coating",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Join filling",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -4385,7 +4570,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 46
         },
@@ -4407,19 +4593,22 @@
                         "to": "",
                         "from": ""
                     },
-                    "validation": 7
+                    "validation": 7,
+                    "id": 1
                 },
                 {
                     "name": "Leak Test for coating",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Bore Packing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -4465,7 +4654,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 47
         },
@@ -4493,13 +4683,15 @@
                         "to": "",
                         "from": ""
                     },
-                    "validation": 10
+                    "validation": 10,
+                    "id": 1
                 },
                 {
                     "name": "Traps",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Leak test",
@@ -4569,7 +4761,8 @@
                                 "value": ""
                             }
                         ]
-                    ]
+                    ],
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -4610,7 +4803,8 @@
                         }
                     ]
                 ],
-                "finalTotal": false
+                "finalTotal": false,
+                "type": "table"
             },
             "id": 48
         },
@@ -4628,7 +4822,8 @@
                     "name": "Waterproof damage",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
@@ -4682,6 +4877,7 @@
                         }
                     ]
                 ],
+                "type": "table",
                 "finalTotal": "total"
             },
             "id": 49
@@ -4720,7 +4916,8 @@
                             "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
                             "id": 2
                         }
-                    ]
+                    ],
+                    "id": 1
                 }
             ],
             "measurement": {
@@ -4774,6 +4971,7 @@
                         }
                     ]
                 ],
+                "type": "table",
                 "finalTotal": "total"
             },
             "id": 50
@@ -4792,7 +4990,8 @@
                     "name": "Coving check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
@@ -4838,7 +5037,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 51
         },
@@ -4856,13 +5056,14 @@
                     "name": "Surface finish",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 52
         },
@@ -4896,19 +5097,22 @@
                     "name": "No cable joints",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Guage check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Core check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -4959,7 +5163,8 @@
                         }
                     ]
                 ],
-                "finalTotal": false
+                "finalTotal": false,
+                "type": "table"
             },
             "id": 53
         },
@@ -4993,19 +5198,22 @@
                     "name": "No cable joints",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Guage check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Core check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -5056,7 +5264,8 @@
                         }
                     ]
                 ],
-                "finalTotal": false
+                "finalTotal": false,
+                "type": "table"
             },
             "id": 54
         },
@@ -5068,13 +5277,15 @@
                     "name": "Level check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Supporting",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
@@ -5103,7 +5314,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 55
         },
@@ -5132,25 +5344,29 @@
                     "name": "Joint tape",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Undulations",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Misc supports",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "Electrical points dimensional check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 }
             ],
             "measurement": {
@@ -5196,7 +5412,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 56
         },
@@ -5209,13 +5426,14 @@
                     "name": "Surface Finish",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 57
         },
@@ -5227,19 +5445,21 @@
                     "name": "Straightness",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Damage",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 58
         },
@@ -5251,31 +5471,35 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "plumb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "corner gaps",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "silicon caulking",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 59
         },
@@ -5287,37 +5511,42 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "plumb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "corner gaps",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "silicon caulking",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 },
                 {
                     "name": "Drain track check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 5
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 60
         },
@@ -5335,37 +5564,42 @@
                     "name": "Levels and alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Edge chip off",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Slope",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "spacer alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 },
                 {
                     "name": "Curing 3 days",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 5
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "SFt",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 61
         },
@@ -5383,37 +5617,42 @@
                     "name": "Levels and alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Edge chip off",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Slope",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "spacer alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 },
                 {
                     "name": "Curing 3 days",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 5
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "SFt",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 62
         },
@@ -5431,37 +5670,42 @@
                     "name": "Levels and alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Edge chip off",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Slope",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "spacer alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 },
                 {
                     "name": "Curing 3 days",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": false
+                    "isRequired": false,
+                    "id": 5
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "SFt",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 63
         },
@@ -5479,19 +5723,21 @@
                     "name": "Grout depth",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Tile damage",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "SFt",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 64
         },
@@ -5509,19 +5755,21 @@
                     "name": "Gaps",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Gumming",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "SFt",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 65
         },
@@ -5571,7 +5819,8 @@
                                 }
                             ]
                         ],
-                        "finalTotal": "name"
+                        "finalTotal": "name",
+                        "type": "table"
                     }
                 }
             ],
@@ -5582,25 +5831,29 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Plumb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Free movements of locks",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "silicon caulking",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 }
             ],
             "measurement": "SAME_AS_PO",
@@ -5652,7 +5905,8 @@
                                 }
                             ]
                         ],
-                        "finalTotal": "name"
+                        "finalTotal": "name",
+                        "type": "table"
                     }
                 }
             ],
@@ -5663,25 +5917,29 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Plumb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Free movements of locks",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "silicon caulking",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 }
             ],
             "measurement": "SAME_AS_PO",
@@ -5733,7 +5991,8 @@
                                 }
                             ]
                         ],
-                        "finalTotal": "name"
+                        "finalTotal": "name",
+                        "type": "table"
                     }
                 }
             ],
@@ -5743,25 +6002,29 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Plumb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Free movements of locks",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "silicon caulking",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 }
             ],
             "measurement": "SAME_AS_PO",
@@ -5813,7 +6076,8 @@
                                 }
                             ]
                         ],
-                        "finalTotal": "name"
+                        "finalTotal": "name",
+                        "type": "table"
                     }
                 }
             ],
@@ -5824,25 +6088,29 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Plumb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Free movements of locks",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "silicon caulking",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 }
             ],
             "measurement": "SAME_AS_PO",
@@ -5862,31 +6130,35 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Plumb",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Free movements of locks",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 },
                 {
                     "name": "silicon caulking",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 4
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "SFt",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 70
         },
@@ -5904,19 +6176,21 @@
                     "name": "Straightness",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Damage",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 71
         },
@@ -5934,13 +6208,14 @@
                     "name": "Surface finish",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 72
         },
@@ -5958,19 +6233,21 @@
                     "name": "Finishing",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Channel Movements",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 73
         },
@@ -5988,13 +6265,14 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 74
         },
@@ -6070,19 +6348,21 @@
                                 "value": ""
                             }
                         ]
-                    ]
+                    ],
+                    "id": 1
                 },
                 {
                     "name": "Test certificate",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 75
         },
@@ -6094,19 +6374,21 @@
                     "name": "Aligment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Allotment of switches",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 76
         },
@@ -6140,19 +6422,22 @@
                     "name": "Mixing check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Surface finish",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Protection",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -6198,7 +6483,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "name"
+                "finalTotal": "name",
+                "type": "table"
             },
             "id": 77
         },
@@ -6216,19 +6502,22 @@
                     "name": "Mixing check",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Surface finish",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Protection",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
@@ -6274,7 +6563,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 78
         },
@@ -6292,13 +6582,14 @@
                     "name": "Surface finish",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "kg",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 79
         },
@@ -6310,25 +6601,28 @@
                     "name": "Connectivity check for DG ",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "Connectivity check for UPS",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 },
                 {
                     "name": "Connectivity check for Main lines",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 3
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 80
         },
@@ -6340,7 +6634,8 @@
                     "name": "Earting value",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
@@ -6377,7 +6672,8 @@
                         }
                     ]
                 ],
-                "finalTotal": false
+                "finalTotal": false,
+                "type": "table"
             },
             "id": 81
         },
@@ -6389,13 +6685,15 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "gloves",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
@@ -6432,7 +6730,8 @@
                         }
                     ]
                 ],
-                "finalTotal": "total"
+                "finalTotal": "total",
+                "type": "table"
             },
             "id": 82
         },
@@ -6449,13 +6748,14 @@
                     "name": "Commissioning",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "LOT",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 83
         },
@@ -6467,19 +6767,21 @@
                     "name": "Alignment",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 1
                 },
                 {
                     "name": "gloves / movement damage",
                     "type": "checkbox",
                     "value": "",
-                    "isRequired": true
+                    "isRequired": true,
+                    "id": 2
                 }
             ],
             "measurement": {
-                "name": "LOT",
                 "UOM": "Nos",
-                "value": ""
+                "value": "",
+                "type": "LOT"
             },
             "id": 84
         }

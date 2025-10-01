@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Header from '../components/Header/header';
+import colors from '../styles/colorPallete';
 
 export default function AddPo() {
   return (
@@ -14,7 +15,7 @@ export default function AddPo() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1, backgroundColor: colors.fullwhite },
   body: { padding: 16 },
-  placeholder: { color: '#666' },
+  placeholder: { color: colors.lightGrey },
 });

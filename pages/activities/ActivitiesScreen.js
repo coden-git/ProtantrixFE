@@ -4,6 +4,7 @@ import mock from '../../mock.json';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Header } from '../../components';
+import colors from '../../styles/colorPallete';
 
 export default function ActivitiesScreen() {
   const navigation = useNavigation();
@@ -15,7 +16,7 @@ export default function ActivitiesScreen() {
       style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
     >
       <Text style={styles.rowText}>{item.name}</Text>
-      <Ionicons name="chevron-forward" size={20} color="#000000" style={styles.icon} />
+      <Ionicons name="chevron-forward" size={20} color={colors.fullBlack} style={styles.icon} />
 
     </Pressable>
   );
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.fullwhite,
   },
   title: {
     fontSize: 24,
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   rowPressed: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.offWhite,
   },
   icon: {
     marginLeft: 'auto',

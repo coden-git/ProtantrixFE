@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import colors from '../../styles/colorPallete';
 
 export default function ProfileScreen() {
   return (
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   },
   bio: {
     marginTop: 8,
-    color: '#666',
+    color: colors.lightGrey,
     textAlign: 'center',
   },
 });
