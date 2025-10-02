@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, Alert } from 'react-native';
 import Header from '../components/Header/header';
-import {getDocumentAsync} from 'expo-document-picker';
+import { getDocumentAsync } from 'expo-document-picker';
+import * as FileSystem from 'expo-file-system';
+import axios from 'axios';
+import { Platform } from 'react-native';
 import colors from '../styles/colorPallete';
 import { FileUpload } from '../components';
 import { useNavigation } from '@react-navigation/native';
 
 
 export default function ActivityDocs({ route }) {
-  const {uploads=[], onActivityChange} = route.params
+  const { uploads = [], onActivityChange } = route.params
   const navigation = useNavigation();
+
 
   // keep track of selected files per upload item
   const [selected, setSelected] = useState({});
@@ -23,8 +27,9 @@ export default function ActivityDocs({ route }) {
   const pickFor = async (item, index) => {
 
     try {
-      console.log(item)  
+      console.log(item)
       const res = await getDocumentAsync({ type: '*/*', multiple: false });
+      console.log(res, 'uploadres')
       if (res.canceled) return;
       setSelected((s) => ({ ...s, [index]: res.assets[0] }));
     } catch (err) {
@@ -44,17 +49,62 @@ export default function ActivityDocs({ route }) {
     </View>
   );
 
-  const uploadAll = () => {
-    const toUpload = uploads.map((it, idx) => ({
+  const uploadAll = async () => {
+    if (Object.keys(selected).length === 0) return;
+    setUploading(true);
+    const results = [];
+    try {
+      const keys = Object.keys(selected);
+
+      for (let i = 0; i < keys.length; i++) {
+        const k = keys[i];
+        const file = selected[k];
+        if (!file) continue;
+
+        const formData = new FormData();
+        formData.append('file', {
+          uri: file.uri,
+          type: file.mimeType || file.type || 'application/octet-stream',
+          name: `file-${Date.now()}-${file.name}`,
+        });
+        formData.append('path', 'activities');
+
+        try {
+          const resp = await axios.post(`https://437bc430c7be.ngrok-free.app/api/v1/project/upload-form`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+            timeout: 60000,
+          });
+          if (resp && resp.data && resp.data.ok) {
+            results.push({  file: file.name, result: resp.data?.result});
+          } else {
+            results.push({ file: file.name, error: (resp && resp.data && resp.data.error) || 'upload-failed' });
+          }
+        } catch (err) {
+          console.warn('Upload error', err);
+          results.push({ index: k, file: file.name, error: String(err && err.message ? err.message : err) });
+        }
+      }
+
+      const toUpload = uploads.map((it, idx) => ({
       ...it,
-      value: selected[idx]?.name || it.value,
+      value: results[idx]?.result
     }))
 
-    onActivityChange(toUpload);
-    navigation.goBack();
+      console.log(JSON.stringify(toUpload), 'api')
+
+      // notify parent about upload results
+      onActivityChange && onActivityChange(toUpload);
+      navigation.goBack();
+    } catch (err) {
+      console.warn('uploadAll error', err);
+      Alert.alert('Upload failed', 'Could not upload files');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const noFileSelected = Object.keys(selected).length === 0;
+  const [uploading, setUploading] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -74,11 +124,11 @@ export default function ActivityDocs({ route }) {
 
       <View style={styles.footer}>
         <Pressable
-          style={[styles.uploadAll, noFileSelected && styles.uploadAllDisabled]}
+          style={[styles.uploadAll, (noFileSelected || uploading) && styles.uploadAllDisabled]}
           onPress={uploadAll}
-          disabled={noFileSelected}
+          disabled={noFileSelected || uploading}
         >
-          <Text style={styles.uploadAllText}>Upload all</Text>
+          {uploading ? <Text style={styles.uploadAllText}>Preparing...</Text> : <Text style={styles.uploadAllText}>Upload all</Text>}
         </Pressable>
       </View>
     </View>
