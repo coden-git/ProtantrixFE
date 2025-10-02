@@ -50,7 +50,7 @@
                     "id": 6
                 },
                 {
-                    "name": "pvcPlumbing and electrical drawing",
+                    "name": "pvc plumbing and electrical drawing",
                     "type": "checkbox",
                     "value": "",
                     "isRequired": true,
@@ -1717,7 +1717,7 @@
                     "id": 3
                 },
                 {
-                    "name": "Cube test",
+                    "name": "Cube cast",
                     "type": "checkbox",
                     "value": "",
                     "isRequired": true,
@@ -1895,14 +1895,24 @@
             "name": "Drain Plumbing",
             "poValue": [
                 {
-                    "label": 1230,
+                    "label": "1/8",
                     "value": 100,
                     "id": 1
                 },
                 {
-                    "label": 1130,
+                    "label": "1/4",
                     "value": 100,
                     "id": 2
+                },
+                {
+                    "label": "3/8",
+                    "value": 100,
+                    "id": 3
+                },
+                {
+                    "label": "1/2",
+                    "value": 100,
+                    "id": 4
                 }
             ],
             "poTrigger": "id",
@@ -1937,7 +1947,7 @@
                         [
                             {
                                 "type": "label",
-                                "value": "Description"
+                                "value": "Pipe size"
                             },
                             {
                                 "type": "label",
@@ -1946,19 +1956,42 @@
                             {
                                 "type": "label",
                                 "value": "Duration"
+                            },
+                            {
+                                "type": "label",
+                                "value": "Image"
                             }
                         ],
                         [
                             {
-                                "type": "text",
-                                "value": ""
+                                "type": "dropdown",
+                                "value": "",
+                                "options": [
+                                    {
+                                        "label": "1/8",
+                                        "value": 1230,
+                                        "id": 1
+                                    },
+                                    {
+                                        "label": "1/4",
+                                        "value": 1130,
+                                        "id": 2
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "number",
+                                "value": "",
+                                "validation": {
+                                    "formula": "<"
+                                }
                             },
                             {
                                 "type": "number",
                                 "value": ""
                             },
                             {
-                                "type": "number",
+                                "type": "image",
                                 "value": ""
                             }
                         ]
@@ -1988,13 +2021,23 @@
                             "options": [
                                 {
                                     "label": "1/8",
-                                    "value": 1230,
+                                    "value": "1/8",
                                     "id": 1
                                 },
                                 {
                                     "label": "1/4",
-                                    "value": 1130,
+                                    "value": "1/4",
                                     "id": 2
+                                },
+                                {
+                                    "label": "3/8",
+                                    "value": "3/8",
+                                    "id": 3
+                                },
+                                {
+                                    "label": "1/2",
+                                    "value": "1/2",
+                                    "id": 4
                                 }
                             ]
                         },
@@ -2296,6 +2339,74 @@
                     "id": 3
                 }
             ],
+            "measurement": {
+                "name": "l*b",
+                "UOM": "SqM",
+                "isMulti": true,
+                "data": [
+                    [
+                        {
+                            "type": "label",
+                            "value": "Name"
+                        },
+                        {
+                            "type": "label",
+                            "value": "Length (m)"
+                        },
+                        {
+                            "type": "label",
+                            "value": "Breadth (m)"
+                        },
+                        {
+                            "type": "label",
+                            "value": "total (kgs)"
+                        }
+                    ],
+                    [
+                        {
+                            "type": "dropdown",
+                            "value": "",
+                            "options": [
+                                {
+                                    "label": "100mm",
+                                    "value": "100mm",
+                                    "id": 1
+                                },
+                                {
+                                    "label": "150mm",
+                                    "value": "150mm",
+                                    "id": 2
+                                },
+                                {
+                                    "label": "200mm",
+                                    "value": "200mm",
+                                    "id": 3
+                                },
+                                {
+                                    "label": "230mm",
+                                    "value": "230mm",
+                                    "id": 4
+                                }
+                            ]
+                        },
+                        {
+                            "type": "number",
+                            "value": ""
+                        },
+                        {
+                            "type": "number",
+                            "value": ""
+                        },
+                        {
+                            "type": "label",
+                            "computeType": "COMPUTE",
+                            "formula": "*"
+                        }
+                    ]
+                ],
+                "finalTotal": "name",
+                "type": "table"
+            },
             "id": 24
         },
         {
@@ -2423,7 +2534,7 @@
                         }
                     ]
                 ],
-                "finalTotal": "total",
+                "finalTotal": "name",
                 "type": "table"
             },
             "id": 25
@@ -3020,11 +3131,11 @@
                             "value": "",
                             "options": [
                                 {
-                                    "label": 20,
+                                    "label": "20",
                                     "value": 20
                                 },
                                 {
-                                    "label": 25,
+                                    "label": "25",
                                     "value": 25
                                 }
                             ]
@@ -3695,13 +3806,6 @@
                     "value": "",
                     "isRequired": true,
                     "id": 2
-                },
-                {
-                    "name": "Positioning and dimensions",
-                    "type": "checkbox",
-                    "value": "",
-                    "isRequired": true,
-                    "id": 3
                 }
             ],
             "measurement": {
@@ -3725,11 +3829,11 @@
                             "value": "",
                             "options": [
                                 {
-                                    "label": 20,
+                                    "label": "20",
                                     "value": 20
                                 },
                                 {
-                                    "label": 25,
+                                    "label": "25",
                                     "value": 25
                                 }
                             ]
@@ -3834,15 +3938,7 @@
                             [
                                 {
                                     "type": "label",
-                                    "value": "Name"
-                                },
-                                {
-                                    "type": "label",
-                                    "value": "length"
-                                },
-                                {
-                                    "type": "label",
-                                    "value": "Breadth"
+                                    "value": "L X B"
                                 },
                                 {
                                     "type": "label",
@@ -3852,15 +3948,8 @@
                             [
                                 {
                                     "type": "text",
-                                    "value": ""
-                                },
-                                {
-                                    "type": "number",
-                                    "value": ""
-                                },
-                                {
-                                    "type": "number",
-                                    "value": ""
+                                    "value": "",
+                                    "disabled": true
                                 },
                                 {
                                     "type": "number",
@@ -4271,14 +4360,24 @@
         {
             "poValue": [
                 {
-                    "label": 1230,
+                    "label": "1/8",
                     "value": 100,
                     "id": 1
                 },
                 {
-                    "label": 1130,
+                    "label": "1/4",
                     "value": 100,
                     "id": 2
+                },
+                {
+                    "label": "3/8",
+                    "value": 100,
+                    "id": 3
+                },
+                {
+                    "label": "1/2",
+                    "value": 100,
+                    "id": 4
                 }
             ],
             "poTrigger": "id",
@@ -4566,14 +4665,24 @@
         {
             "poValue": [
                 {
-                    "label": 1230,
+                    "label": "1/8",
                     "value": 100,
                     "id": 1
                 },
                 {
-                    "label": 1130,
+                    "label": "1/4",
                     "value": 100,
                     "id": 2
+                },
+                {
+                    "label": "3/8",
+                    "value": 100,
+                    "id": 3
+                },
+                {
+                    "label": "1/2",
+                    "value": 100,
+                    "id": 4
                 }
             ],
             "poTrigger": "id",
@@ -4680,13 +4789,23 @@
                             "options": [
                                 {
                                     "label": "1/8",
-                                    "value": 1230,
+                                    "value": "1/8",
                                     "id": 1
                                 },
                                 {
                                     "label": "1/4",
-                                    "value": 1130,
+                                    "value": "1/4",
                                     "id": 2
+                                },
+                                {
+                                    "label": "3/8",
+                                    "value": "3/8",
+                                    "id": 3
+                                },
+                                {
+                                    "label": "1/2",
+                                    "value": "1/2",
+                                    "id": 4
                                 }
                             ]
                         },
@@ -5678,15 +5797,7 @@
                             [
                                 {
                                     "type": "label",
-                                    "value": "Name"
-                                },
-                                {
-                                    "type": "label",
-                                    "value": "length"
-                                },
-                                {
-                                    "type": "label",
-                                    "value": "Breadth"
+                                    "value": "L X B"
                                 },
                                 {
                                     "type": "label",
@@ -5696,15 +5807,8 @@
                             [
                                 {
                                     "type": "text",
-                                    "value": ""
-                                },
-                                {
-                                    "type": "number",
-                                    "value": ""
-                                },
-                                {
-                                    "type": "number",
-                                    "value": ""
+                                    "value": "",
+                                    "disabled": true
                                 },
                                 {
                                     "type": "number",
@@ -5764,15 +5868,7 @@
                             [
                                 {
                                     "type": "label",
-                                    "value": "Name"
-                                },
-                                {
-                                    "type": "label",
-                                    "value": "length"
-                                },
-                                {
-                                    "type": "label",
-                                    "value": "Breadth"
+                                    "value": "L X B"
                                 },
                                 {
                                     "type": "label",
@@ -5782,15 +5878,8 @@
                             [
                                 {
                                     "type": "text",
-                                    "value": ""
-                                },
-                                {
-                                    "type": "number",
-                                    "value": ""
-                                },
-                                {
-                                    "type": "number",
-                                    "value": ""
+                                    "value": "",
+                                    "disabled": true
                                 },
                                 {
                                     "type": "number",
@@ -5850,15 +5939,7 @@
                             [
                                 {
                                     "type": "label",
-                                    "value": "Name"
-                                },
-                                {
-                                    "type": "label",
-                                    "value": "length"
-                                },
-                                {
-                                    "type": "label",
-                                    "value": "Breadth"
+                                    "value": "L X B"
                                 },
                                 {
                                     "type": "label",
@@ -5868,15 +5949,8 @@
                             [
                                 {
                                     "type": "text",
-                                    "value": ""
-                                },
-                                {
-                                    "type": "number",
-                                    "value": ""
-                                },
-                                {
-                                    "type": "number",
-                                    "value": ""
+                                    "value": "",
+                                    "disabled": true
                                 },
                                 {
                                     "type": "number",
@@ -5935,15 +6009,7 @@
                             [
                                 {
                                     "type": "label",
-                                    "value": "Name"
-                                },
-                                {
-                                    "type": "label",
-                                    "value": "length"
-                                },
-                                {
-                                    "type": "label",
-                                    "value": "Breadth"
+                                    "value": "L X B"
                                 },
                                 {
                                     "type": "label",
@@ -5953,15 +6019,8 @@
                             [
                                 {
                                     "type": "text",
-                                    "value": ""
-                                },
-                                {
-                                    "type": "number",
-                                    "value": ""
-                                },
-                                {
-                                    "type": "number",
-                                    "value": ""
+                                    "value": "",
+                                    "disabled": true
                                 },
                                 {
                                     "type": "number",

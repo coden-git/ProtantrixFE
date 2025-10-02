@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable, Alert } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable, Alert, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Checkbox, Header } from '../../components';
+import { Checkbox, DateRange, Header } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../styles/colorPallete';
 import { MultiSelect  } from "react-native-element-dropdown";
@@ -77,6 +77,19 @@ export default function ActivityDetail({ route }) {
             );
         }
 
+        if ((item?.type || '').toLowerCase() === 'daterange') {
+            // value expected shape: { from: '', to: '' }
+            return (
+                <View>
+                    <Text style={styles.label}>{item.name}</Text>
+                    <DateRange
+                        value={item.value || { from: '', to: '' }}
+                        onChange={(val) => updateActivity(index, val)}
+                    />
+                </View>
+            );
+        }
+
         
     };
 
@@ -112,13 +125,81 @@ export default function ActivityDetail({ route }) {
     };
 
     const onPoChange = (updatedPo) => {
-        console.log('Received updated PO:', updatedPo);
+        console.log('Received updated PO:', JSON.stringify(updatedPo));
         setActivity((prev) => {
             const next = { ...prev };
             next.poValue = updatedPo;
             return next;
         });
     };
+
+    const onMeasurment=() => { 
+        console.log(activity.measurement)
+        if (activity.measurement === 'SAME_AS_PO'){
+            // updatePoToMeasurement(activity.poValue?.[0]?.value)
+            if(JSON.stringify(activity.poValue?.[0]?.value) === JSON.stringify(initialActivity.poValue?.[0]?.value)){
+            Alert.alert('Admin has not added po yet', '', [
+                                { text: 'OK' }
+                            ])
+             return               
+            }
+            navigation.navigate('Measurements', { measurement: updatePoToMeasurement(activity.poValue?.[0]?.value), onMeasurementChange }) 
+            return
+        }
+        navigation.navigate('Measurements', { measurement: activity.measurement, onMeasurementChange }) 
+    }
+
+    const updatePoToMeasurement = (po)=>{
+        // Recursively walk the structure and remove `value` where `disabled` is false or not present
+        console.log(JSON.stringify(po) === initialActivity.poValue?.[0]?.value, 'initial')
+        
+        const stripValues = (node) => {
+            if (Array.isArray(node)) {
+                return node.map((n) => stripValues(n));
+            }
+            if (node && typeof node === 'object') {
+                const next = { ...node };
+
+                // If this is a label cell, always keep its value (but still recurse)
+                if (next.type === 'label') {
+                    if (next.value !== undefined) next.value = stripValues(next.value);
+                } else if ('disabled' in next) {
+                    if (next.disabled === true) {
+                        // keep value but still recurse into it
+                        if (next.value !== undefined) next.value = stripValues(next.value);
+                    } else {
+                        // disabled is false -> remove value
+                        if ('value' in next) delete next.value;
+                    }
+                } else {
+                    // no disabled flag -> remove value per requirement
+                    if ('value' in next) delete next.value;
+                }
+
+                // Recurse other keys (for nested structures like data, options, etc.)
+                Object.keys(next).forEach((k) => {
+                    if (k === 'value') return; // already handled
+                    const v = next[k];
+                    if (Array.isArray(v) || (v && typeof v === 'object')) {
+                        next[k] = stripValues(v);
+                    }
+                });
+
+                return next;
+            }
+            return node;
+        };
+
+        try {
+            const cleaned = stripValues(po);
+            console.log('updatePoToMeasurement cleaned:', JSON.stringify(cleaned));
+            
+            return {...cleaned, isMulti: false};
+        } catch (err) {
+            console.warn('updatePoToMeasurement error', err);
+            return po;
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -143,7 +224,7 @@ export default function ActivityDetail({ route }) {
                             </View>
                         </Pressable>
                     )}
-                    <Pressable style={styles.pill} onPress={() => { navigation.navigate('Measurements', { measurement: activity.measurement, onMeasurementChange }) }}>
+                    <Pressable style={styles.pill} onPress={onMeasurment}>
                         <View style={styles.pillContent}>
                             <Ionicons name="bar-chart" size={16} color={colors.fullBlack} />
                             <Text style={styles.pillText}>Measurements</Text>
@@ -212,3 +293,5 @@ const styles = StyleSheet.create({
     tableRow: { paddingVertical: 12, paddingHorizontal: 10, borderRadius: 8, backgroundColor: colors.fullwhite },
 
 });
+
+

@@ -15,10 +15,10 @@ const TableMeasurment = ({ measurement, setMeasurement }) => {
     const initialRows = isTable && Array.isArray(measurement.data) && measurement.data.length > 1
         ? measurement.data.slice(1).map((r) => r.map((c) => ({ ...c })))
         : [];
+    
+    console.log('table=rows', JSON.stringify(measurement))
+        
 
-    const computeType = templateRow.find((c) => c.type === 'label' && c.formula === '*')?.computeType
-
-    console.log('table=init', computeType)
 
     const [rows, setRows] = useState(initialRows);
 
@@ -97,7 +97,7 @@ const TableMeasurment = ({ measurement, setMeasurement }) => {
             console.log(JSON.stringify(rows[0]), 'here')
             return rows.reduce((acc, row) => {
                 // try to find a computed cell
-                const computed = row.find((c) => c.type === 'label' && c.formula === '*');
+                const computed = row.find((c) => c.type === 'label' && c.formula === '*') || row.find((c) => c.type === 'number');
                 
                 if (acc[row[0]?.value]){
                     acc[row[0]?.value] = acc[row[0]?.value] + Number(computed.value)
@@ -109,7 +109,6 @@ const TableMeasurment = ({ measurement, setMeasurement }) => {
         }
     }, [rows, measurement]);
 
-    console.log('table=rows', JSON.stringify(finalTotal))
     return (
         <ScrollView style={{ height: '80%' }}>
             <Text style={styles.label}>Name: {measurement.name}</Text>
@@ -127,20 +126,21 @@ const TableMeasurment = ({ measurement, setMeasurement }) => {
                             <Text style={styles.cardLabel}>{headers[ci]?.value || `Col ${ci + 1}`}</Text>
                             {cell.type === 'label' && <Text style={styles.cardValue}>{cell.value}</Text>}
                             {cell.type === 'text' && (
-                                <TextInput value={cell.value} onChangeText={(t) => updateCell(ri, ci, t)} style={styles.inputSmall} />
+                                <TextInput editable={!cell.disabled} value={cell.value} onChangeText={(t) => updateCell(ri, ci, t)} style={[styles.inputSmall, cell.disabled && styles.inputDisabled]} />
                             )}
                             {cell.type === 'number' && (
-                                <TextInput value={String(cell.value || '')} onChangeText={(t) => updateCell(ri, ci, t)} keyboardType="numeric" style={styles.inputSmall} />
+                                <TextInput  editable={!cell.disabled} value={String(cell.value || '')} onChangeText={(t) => updateCell(ri, ci, t)} keyboardType="numeric" style={[styles.inputSmall, cell.disabled && styles.inputDisabled]} />
                             )}
                             {cell.type === 'dropdown' && (
                                 <Dropdown
-                                    style={styles.dropdown}
+                                    style={[styles.dropdown, cell.disabled && styles.dropdownDisabled]}
                                     data={cell?.options}
                                     labelField="label"
                                     valueField="value"
                                     placeholder="Select"
                                     value={cell.value}
-                                    onChange={(item) => updateCell(ri, ci, item.value)}
+                                    disable={cell.disabled}
+                                    onChange={(item) => !cell.disabled && updateCell(ri, ci, item.value)}
                                 />
                             )}
                         </View>
@@ -169,7 +169,8 @@ const styles = StyleSheet.create({
     tableRow: { flexDirection: 'row', alignItems: 'center', marginVertical: 6 },
     tableCell: { minWidth: 120, paddingHorizontal: 8 },
     tableHeader: { fontWeight: '700' },
-    inputSmall: { borderWidth: 1, borderColor: '#ddd', padding: 6, borderRadius: 6 },
+    inputSmall: { borderWidth: 1, borderColor: colors.offWhite, padding: 6, borderRadius: 6 },
+    inputDisabled: { backgroundColor: colors.fullwhite, borderColor: colors.offWhite, color: colors.lightGrey },
     addRow: { marginTop: 10, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 6, borderWidth: 1, borderColor: colors.primary, alignSelf: 'flex-start' },
 
     /* Card styles for row presentation */
@@ -186,4 +187,5 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 10,
     },
+    dropdownDisabled: { backgroundColor: '#f5f5f5', borderColor: colors.offWhite },
 });

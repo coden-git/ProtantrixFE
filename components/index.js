@@ -1,9 +1,11 @@
 import Header from "./Header/header";
 import Checkbox from "./Checkbox/Checkbox";
 import FileUpload from "./FileUpload/fileUpload";
+import DateRange from "./DateRange/DateRange";
 
 export {
     Header,
     Checkbox,
-    FileUpload
+    FileUpload,
+    DateRange
 };
