@@ -1,11 +1,12 @@
 import React, { use, useMemo, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View, ActivityIndicator } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import colors from "../../styles/colorPallete";
 import { Dropdown } from "react-native-element-dropdown";
 import { FileUpload, Header } from "../../components";
 import { getDocumentAsync } from "expo-document-picker";
 import { useNavigation } from "@react-navigation/native";
+import axios from 'axios'
 
 const ActionTable = ({ route }) => {
     const { item, updateActivity } = route.params || {};
@@ -55,7 +56,7 @@ const ActionTable = ({ route }) => {
         });
     };
 
-    const pickFor = async (rowIndex, colIndex) => {
+    const pickFor = async (rowIndex, colIndex, item) => {
 
         try {
             const res = await getDocumentAsync({ type: '*/*', multiple: false });
@@ -72,8 +73,12 @@ const ActionTable = ({ route }) => {
         }
     };
 
-    const onSave = () => {
+    const [saving, setSaving] = useState(false);
+
+    const onSave = async () => {
         // Merge images into rows: images is expected to be images[rowIndex][colIndex]
+        setSaving(true);
+        try {
             const next = rows.map((r) => r.map((c) => ({ ...c })));
             // iterate images and copy into corresponding cell.value
             for (let r = 0; r < images.length; r++) {
@@ -82,19 +87,33 @@ const ActionTable = ({ route }) => {
                     const img = imgRow[c];
                     if (!img) continue;
 
-                    next[r][c].value = img.name;
+                    const formData = new FormData();
+                    formData.append('file', {
+                        uri: img.uri,
+                        type: img.mimeType || 'application/octet-stream',
+                        name: `file-${Date.now()}-${img.name}`,
+                    });
+                    formData.append('path', 'activities');
+                    const resp = await axios.post(`https://437bc430c7be.ngrok-free.app/api/v1/project/upload-form`, formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' },
+                        timeout: 60000,
+                    });
+
+                    next[r][c].value = resp?.data?.result
 
                 }
             }
 
 
-
-            console.log('Saving table data', next, rows)
+            console.log('Saving table data', next)
             updateActivity([headers, ...next]);
             navigation.goBack();
-
-
-        // persist back to parent if updateActivity provided
+        } catch (err) {
+            console.warn('onSave error', err);
+            Alert.alert('Save failed', 'An error occurred while saving the table.');
+        } finally {
+            setSaving(false);
+        }
 
     }
 
@@ -144,10 +163,9 @@ const ActionTable = ({ route }) => {
                                 )}
                                 {cell.type === 'image' && (
                                     <FileUpload
-                                        onPick={() => pickFor(ri, ci)}
+                                        onPick={() => pickFor(ri, ci, cell)}
                                         value={cell.value}
                                         selected={images[ri] ? images[ri][ci] : null}
-                                    // label={cell.name}
                                     />
                                 )}
 
@@ -162,8 +180,8 @@ const ActionTable = ({ route }) => {
 
             </ScrollView>
             <View style={styles.footer}>
-                <Pressable style={styles.saveButton} onPress={onSave}>
-                    <Text style={styles.saveButtonText}>Save</Text>
+                <Pressable style={[styles.saveButton, saving && styles.saveButtonDisabled]} onPress={onSave} disabled={saving}>
+                    {saving ? <ActivityIndicator color={colors.fullwhite} /> : <Text style={styles.saveButtonText}>Save</Text>}
                 </Pressable>
             </View>
         </View>
@@ -203,4 +221,5 @@ const styles = StyleSheet.create({
     title: { fontSize: 22, fontWeight: '700' },
     saveButton: { backgroundColor: colors.primary, paddingVertical: 14, borderRadius: 8, alignItems: 'center' },
     saveButtonText: { color: colors.fullwhite, fontWeight: '700', fontSize: 16 },
+    saveButtonDisabled: { backgroundColor: colors.lighterGrey },
 });
