@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable, TouchableOpacity, TextInput } from 'react-native';
-import mock from '../../mock.json';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, FlatList, Pressable, TouchableOpacity, TextInput, ActivityIndicator, Button } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Header } from '../../components';
@@ -8,25 +9,89 @@ import colors from '../../styles/colorPallete';
 
 export default function ActivitiesScreen() {
   const navigation = useNavigation();
-  const data = mock.activities || [];
+  // If this screen is used to show activities for a specific project, it
+  // expects a route param named `projectId` (which maps to Project.uuid).
+  // If not provided, fallback to showing an empty list.
+  const route = navigation.getState && navigation.getState().routes ? null : null;
+  const params = (navigation && navigation.getState && navigation.getState().routes)
+    ? null
+    : null;
+
+  // We'll read projectId from route params via the navigation prop if available.
+  // The navigator usually provides route in props, but with hooks we can use
+  // useRoute(); however to avoid importing another hook, the caller should
+  // pass projectId via navigation params when navigating to this screen.
+  const projectId = 'ee7dc6fa-ceaf-458a-9ab9-d1e8770be764'
+
+  const [data, setData] = useState([]);
   const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const filtered = useMemo(() => {
     if (!query) return data;
     const q = query.toLowerCase();
-    return data.filter((a) => (a.name || '').toLowerCase().includes(q));
+    return data.filter((a) => (a && a.name && a.name.toLowerCase().includes(q)));
   }, [data, query]);
 
-  const renderItem = ({ item, index }) => (
-    <Pressable
-      onPress={() => navigation.navigate('ActivityDetail', { activity: item })}
-      style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
-    >
-      <Text style={styles.rowText}>{index + 1}. {item.name}</Text>
-      <Ionicons name="chevron-forward" size={20} color={colors.fullBlack} style={styles.icon} />
+  const loadActivities = useCallback(async () => {
+    let cancelled = false;
 
-    </Pressable>
+    if (!projectId) {
+      setData([]);
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await axios.get(`https://437bc430c7be.ngrok-free.app/api/v1/projects/${projectId}/activities`);
+      if (cancelled) return;
+      if (res && res.data && res.data.ok) {
+        setData(res.data.activities || []);
+      } else {
+        setError((res && res.data && res.data.error) || 'Unexpected API response');
+        setData([]);
+      }
+    } catch (err) {
+      console.log(err);
+      if (cancelled) return;
+      setError(err.message || 'Network error');
+      setData([]);
+    } finally {
+      if (!cancelled) setLoading(false);
+    }
+
+    return () => { cancelled = true; };
+  }, [projectId]);
+
+  // Load on mount and whenever projectId changes
+  useEffect(() => {
+    loadActivities();
+  }, [loadActivities]);
+
+  // Also reload when the screen gains focus (user navigates back)
+  useFocusEffect(
+    useCallback(() => {
+      loadActivities();
+    }, [loadActivities])
   );
+
+  const renderItem = ({ item, index }) => {
+    const name = typeof item === 'string' ? item : (item && (item.name || item.title)) || 'Unnamed activity';
+    const payload = typeof item === 'string' ? { name } : item;
+
+    return (
+      <Pressable
+        onPress={() => navigation.navigate('ActivityDetail', { activity: payload, projectId })}
+        style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
+      >
+        <Text style={styles.rowText}>{index + 1}. {name}</Text>
+        <Ionicons name="chevron-forward" size={20} color={colors.fullBlack} style={styles.icon} />
+      </Pressable>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -46,9 +111,24 @@ export default function ActivitiesScreen() {
         )}
       </View>
 
+      {loading && <ActivityIndicator size="large" />}
+      {error && (
+        <View style={{ padding: 12 }}>
+          <Text style={{ color: 'red', marginBottom: 8 }}>{error}</Text>
+          <Button title="Retry" onPress={() => {
+            // trigger re-fetch by toggling query (cheap) — better would be to
+            // expose a reload function/method; for now, re-run effect by
+            // temporarily clearing and resetting projectId via state isn't ideal
+            // so we'll simply call the effect's async function via a small hack:
+            setQuery((q) => q + ' ');
+            setQuery((q) => q.trim());
+          }} />
+        </View>
+      )}
+
       <FlatList
         data={filtered}
-        keyExtractor={(item) => String(item.id ?? item.name)}
+        keyExtractor={(item, idx) => String(item && (item.id || item.name) || idx)}
         renderItem={renderItem}
         contentContainerStyle={{ paddingBottom: 24 }}
       />

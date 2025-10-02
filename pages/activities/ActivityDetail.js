@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable, Alert, Platform } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable, Alert, Platform, ActivityIndicator } from 'react-native';
+import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import { Checkbox, DateRange, Header } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../styles/colorPallete';
-import { MultiSelect  } from "react-native-element-dropdown";
+import { MultiSelect } from "react-native-element-dropdown";
 
 
 export default function ActivityDetail({ route }) {
-    const { activity: initialActivity } = route.params || {};
+    const { activity: initialActivity, projectId } = route.params || {};
     const navigation = useNavigation();
     // local editable copy
     const [activity, setActivity] = useState(() => ({
         ...(initialActivity || {}),
     }));
+    const [saving, setSaving] = useState(false);
 
 
     console.log(activity)
@@ -30,7 +32,7 @@ export default function ActivityDetail({ route }) {
             return (
                 <View>
                     <Text style={styles.label}>{item.name}</Text>
-                    <MultiSelect 
+                    <MultiSelect
                         style={styles.dropdown}
                         data={item?.options}
                         labelField="label"
@@ -90,10 +92,11 @@ export default function ActivityDetail({ route }) {
             );
         }
 
-        
+
     };
 
     const uploads = activity.checkLists?.filter(it => (it.type || '').toLowerCase() === 'fileupload') || [];
+
 
     const onActivityChange = (updatedActivities = []) => {
         // updatedActivities is expected to be an array of objects that include an id matching the checklist item id
@@ -133,26 +136,25 @@ export default function ActivityDetail({ route }) {
         });
     };
 
-    const onMeasurment=() => { 
-        console.log(activity.measurement)
-        if (activity.measurement === 'SAME_AS_PO'){
+    const onMeasurment = () => {
+        if (activity.measurement === 'SAME_AS_PO') {
             // updatePoToMeasurement(activity.poValue?.[0]?.value)
-            if(JSON.stringify(activity.poValue?.[0]?.value) === JSON.stringify(initialActivity.poValue?.[0]?.value)){
-            Alert.alert('Admin has not added po yet', '', [
-                                { text: 'OK' }
-                            ])
-             return               
+            if (JSON.stringify(activity.poValue?.[0]?.value) === JSON.stringify(initialActivity.poValue?.[0]?.value)) {
+                Alert.alert('Admin has not added po yet', '', [
+                    { text: 'OK' }
+                ])
+                return
             }
-            navigation.navigate('Measurements', { measurement: updatePoToMeasurement(activity.poValue?.[0]?.value), onMeasurementChange }) 
+            navigation.navigate('Measurements', { measurement: updatePoToMeasurement(activity.poValue?.[0]?.value), onMeasurementChange })
             return
         }
-        navigation.navigate('Measurements', { measurement: activity.measurement, onMeasurementChange }) 
+        navigation.navigate('Measurements', { measurement: activity.measurement, onMeasurementChange })
     }
 
-    const updatePoToMeasurement = (po)=>{
+    const updatePoToMeasurement = (po) => {
         // Recursively walk the structure and remove `value` where `disabled` is false or not present
         console.log(JSON.stringify(po) === initialActivity.poValue?.[0]?.value, 'initial')
-        
+
         const stripValues = (node) => {
             if (Array.isArray(node)) {
                 return node.map((n) => stripValues(n));
@@ -193,11 +195,45 @@ export default function ActivityDetail({ route }) {
         try {
             const cleaned = stripValues(po);
             console.log('updatePoToMeasurement cleaned:', JSON.stringify(cleaned));
-            
-            return {...cleaned, isMulti: false};
+
+            return { ...cleaned, isMulti: false };
         } catch (err) {
             console.warn('updatePoToMeasurement error', err);
             return po;
+        }
+    }
+
+    const onSave = async () => {
+        // Save handler: call backend to update activity
+        try {
+            if (!projectId) {
+                Alert.alert('Missing project id', 'Cannot save activity because project id is not provided.', [{ text: 'OK' }]);
+                return;
+            }
+
+            const activityId = activity.id
+            if (!activityId) {
+                Alert.alert('Missing activity id', 'Cannot save activity because activity id is not present.', [{ text: 'OK' }]);
+                return;
+            }
+
+            setSaving(true);
+
+            // Use appropriate host for your dev environment. Update as needed.
+            const url = `https://437bc430c7be.ngrok-free.app/api/v1/projects/${projectId}/activities/${activityId}`;
+
+            const res = await axios.put(url, activity, { timeout: 30000 });
+            if (res && res.data && res.data.ok) {
+                // success -> go back
+                navigation.goBack();
+            } else {
+                throw new Error((res && res.data && res.data.error) || 'Failed to save');
+            }
+        } catch (err) {
+            console.warn('Save activity error', err);
+            Alert.alert('Failed to save', String(err && err.message ? err.message : err), [{ text: 'OK' }]);
+        } finally {
+            setSaving(false);
         }
     }
 
@@ -242,8 +278,12 @@ export default function ActivityDetail({ route }) {
             </View>
 
             <View style={styles.footer}>
-                <Pressable style={styles.saveButton} onPress={() => { console.log('Saving activity', activity); Alert.alert('Saved', 'Activity saved (logged)'); }}>
-                    <Text style={styles.saveButtonText}>Save</Text>
+                <Pressable
+                    style={[styles.saveButton, saving && styles.saveButtonDisabled]}
+                    onPress={onSave}
+                    disabled={saving}
+                >
+                    {saving ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveButtonText}>Save</Text>}
                 </Pressable>
             </View>
         </View>
