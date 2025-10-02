@@ -5,6 +5,7 @@ const colors = {
     fullwhite: '#fff',
     fullBlack: '#000',
     offWhite: '#f9f9f9',
+    red: "#dd1919ff"
 }
 
 export default colors;

@@ -6,8 +6,8 @@ import ProfileScreen from './profile/ProfileScreen';
 import ActivitiesScreen from './activities/ActivitiesScreen';
 import AddPo from './AddPo';
 import ActivityDocs from './ActivityDocs';
-import Measurements from './Measurements';
-
+import Measurements from './Measuements/Measurements';
+import ActionTable from './activities/ActionTable';
 
 export  {
 	HomeScreen,
@@ -18,4 +18,5 @@ export  {
 	AddPo,
 	ActivityDocs,
 	Measurements,
+	ActionTable
 };

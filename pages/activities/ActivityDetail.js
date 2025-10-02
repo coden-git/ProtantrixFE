@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Checkbox, Header } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../styles/colorPallete';
+import { MultiSelect  } from "react-native-element-dropdown";
+
 
 export default function ActivityDetail({ route }) {
     const { activity: initialActivity } = route.params || {};
@@ -15,7 +17,7 @@ export default function ActivityDetail({ route }) {
 
 
     console.log(activity)
-    const toggleChecklistAt = (index, newVal) => {
+    const updateActivity = (index, newVal) => {
         setActivity((prev) => {
             const next = { ...prev };
             next.checkLists = prev.checkLists.map((it, i) => (i === index ? { ...it, value: newVal } : it));
@@ -24,17 +26,58 @@ export default function ActivityDetail({ route }) {
     };
 
     const renderChecklist = ({ item, index }) => {
+        if ((item.type || '').toLowerCase() === 'dropdown') {
+            return (
+                <View>
+                    <Text style={styles.label}>{item.name}</Text>
+                    <MultiSelect 
+                        style={styles.dropdown}
+                        data={item?.options}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={`Select ${item.name}`}
+                        value={item.value}
+                        onChange={(select) => updateActivity(index, select)}
+                        // style for selected items (chips/pills)
+                        selectedStyle={styles.selectedItem}
+                        selectedTextStyle={styles.selectedText}
+                        chipStyle={styles.selectedItem}
+                        chipTextStyle={styles.selectedText}
+                        // custom render for dropdown rows to include meta
+                        renderItem={(opt) => (
+                            <View style={styles.itemContainer}>
+                                <Text style={styles.itemLabel}>{opt.label}</Text>
+                                {opt.meta ? <Text style={styles.itemMeta}>{opt.meta}</Text> : null}
+                            </View>
+                        )}
+                    />
+                </View>
+            );
+        }
         if ((item.type || '').toLowerCase() === 'checkbox') {
             return (
                 <View style={styles.checkItem}>
                     <Checkbox
                         label={item.name}
                         value={Boolean(item.value)}
-                        onClick={(v) => toggleChecklistAt(index, v)}
+                        onClick={(v) => updateActivity(index, v)}
                     />
                 </View>
             );
         }
+
+        if ((item.type || '').toLowerCase() === 'table') {
+            return (
+                <Pressable style={styles.tableRow} onPress={() => navigation.navigate('ActionTable', { item, updateActivity: (updated) => updateActivity(index, updated) })}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={styles.label}>{item.name}</Text>
+                        {item.meta ? <Text style={styles.itemMeta}>{item.meta}</Text> : null}
+                    </View>
+                </Pressable>
+            );
+        }
+
+        
     };
 
     const uploads = activity.checkLists?.filter(it => (it.type || '').toLowerCase() === 'fileupload') || [];
@@ -68,6 +111,15 @@ export default function ActivityDetail({ route }) {
         });
     };
 
+    const onPoChange = (updatedPo) => {
+        console.log('Received updated PO:', updatedPo);
+        setActivity((prev) => {
+            const next = { ...prev };
+            next.poValue = updatedPo;
+            return next;
+        });
+    };
+
     return (
         <View style={styles.container}>
             <Header title={activity?.name ?? 'Activity'} enableBackButton={true} />
@@ -83,27 +135,27 @@ export default function ActivityDetail({ route }) {
                     contentContainerStyle={{ paddingTop: 8 }}
                 />
                 <View style={styles.pillRow}>
-                {uploads.length > 0 && (
-                    <Pressable style={styles.pill} onPress={() => {navigation.navigate('ActivityDocs', { uploads, onActivityChange })}}>
-                        <View style={styles.pillContent}>
-                            <Ionicons name="document-text-outline" size={16} color={colors.fullBlack} />
-                            <Text style={styles.pillText}>Docs</Text>
-                        </View>
-                    </Pressable>
-                )}
-                    <Pressable style={styles.pill} onPress={() => {navigation.navigate('Measurements', { measurement: activity.measurement, onMeasurementChange})}}>
+                    {uploads.length > 0 && (
+                        <Pressable style={styles.pill} onPress={() => { navigation.navigate('ActivityDocs', { uploads, onActivityChange }) }}>
+                            <View style={styles.pillContent}>
+                                <Ionicons name="document-text-outline" size={16} color={colors.fullBlack} />
+                                <Text style={styles.pillText}>Docs</Text>
+                            </View>
+                        </Pressable>
+                    )}
+                    <Pressable style={styles.pill} onPress={() => { navigation.navigate('Measurements', { measurement: activity.measurement, onMeasurementChange }) }}>
                         <View style={styles.pillContent}>
                             <Ionicons name="bar-chart" size={16} color={colors.fullBlack} />
                             <Text style={styles.pillText}>Measurements</Text>
                         </View>
                     </Pressable>
                     {activity.poValue?.length > 0 && (
-                    <Pressable style={styles.pill} onPress={() => {navigation.navigate('AddPo', { po: activity.poValue })}}>
-                        <View style={styles.pillContent}>
-                            <Ionicons name="receipt-outline" size={16} color={colors.fullBlack} />
-                            <Text style={styles.pillText}>PO</Text>
-                        </View>
-                    </Pressable>
+                        <Pressable style={styles.pill} onPress={() => { navigation.navigate('AddPo', { poValue: activity.poValue, onPoChange }) }}>
+                            <View style={styles.pillContent}>
+                                <Ionicons name="receipt-outline" size={16} color={colors.fullBlack} />
+                                <Text style={styles.pillText}>PO</Text>
+                            </View>
+                        </Pressable>
                     )}
                 </View>
             </View>
@@ -133,4 +185,30 @@ const styles = StyleSheet.create({
     footer: { padding: 16, borderTopWidth: 1, borderTopColor: colors.lighterGrey, backgroundColor: colors.fullwhite },
     saveButton: { backgroundColor: colors.primary, paddingVertical: 14, borderRadius: 8, alignItems: 'center' },
     saveButtonText: { color: colors.fullwhite, fontWeight: '700', fontSize: 16 },
+    dropdown: {
+        height: 50,
+        borderColor: "gray",
+        borderWidth: 1,
+        borderRadius: 8,
+        paddingHorizontal: 10,
+    },
+    label: { marginLeft: 10, fontSize: 16, paddingBottom: 7 },
+    selectedItem: {
+        backgroundColor: colors.fullwhite,
+        borderRadius: 16,
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        margin: 4,
+    },
+    selectedText: {
+        color: colors.fullBlack,
+        fontSize: 14,
+    },
+    itemContainer: { paddingVertical: 8, paddingHorizontal: 12, borderBottomWidth: 1, borderBottomColor: colors.offWhite },
+    itemLabel: { fontSize: 16, color: colors.fullBlack },
+    itemMeta: { fontSize: 12, color: colors.lightGrey, marginTop: 4 },
+    selectedItemContent: { flexDirection: 'column' },
+    selectedMetaText: { color: colors.fullwhite, fontSize: 12, marginTop: 2 },
+    tableRow: { paddingVertical: 12, paddingHorizontal: 10, borderRadius: 8, backgroundColor: colors.fullwhite },
+
 });

@@ -197,15 +197,13 @@
                             "value": "",
                             "options": [
                                 {
-                                    "label": "M5",
-                                    "value": "M5",
-                                    "meta": "1 Cement, 5 Sand, 10 Coarse aggregate",
+                                    "label": "0-1.5m",
+                                    "value": "0-1.5m",
                                     "id": 1
                                 },
                                 {
-                                    "label": "M7.5",
-                                    "value": "M7.5",
-                                    "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
+                                    "label": "1.5-3m",
+                                    "value": "1.5-3m",
                                     "id": 2
                                 }
                             ]
@@ -224,7 +222,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -346,7 +344,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -391,7 +389,7 @@
             "measurement": {
                 "name": "Running meter Kgs",
                 "UOM": "KGs",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -430,7 +428,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE_VALUE",
                             "formula": "*"
                         }
                     ]
@@ -468,7 +466,7 @@
             "measurement": {
                 "name": "Running meter Kgs",
                 "UOM": "KGs",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -507,7 +505,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE_VALUE",
                             "formula": "*"
                         }
                     ]
@@ -545,7 +543,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -580,7 +578,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -638,15 +636,12 @@
                     "name": "Cube test",
                     "type": "Table",
                     "isRequired": true,
+                    "isMulti": true,
                     "value": [
                         [
                             {
                                 "type": "label",
                                 "value": "Mixing Ratio,"
-                            },
-                            {
-                                "type": "label",
-                                "value": "Days"
                             },
                             {
                                 "type": "label",
@@ -663,49 +658,35 @@
                                 "value": "",
                                 "options": [
                                     {
-                                        "label": "M5",
-                                        "value": "M5",
+                                        "label": "14th Day M5",
                                         "meta": "1 Cement, 5 Sand, 10 Coarse aggregate",
+                                        "value": 14,
                                         "id": 1
                                     },
                                     {
-                                        "label": "M7.5",
-                                        "value": "M7.5",
-                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
+                                        "label": "28th Day M5",
+                                        "value": 28,
+                                        "meta": "1 Cement, 5 Sand, 10 Coarse aggregate",
                                         "id": 2
+                                    },
+                                    {
+                                        "label": "14th Day 7.5",
+                                        "value": 14,
+                                        "id": 3,
+                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate"
+                                    },
+                                    {
+                                        "label": "28th Day 7.5",
+                                        "value": 28,
+                                        "id": 4,
+                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate"
                                     }
                                 ]
                             },
                             {
                                 "type": "number",
-                                "value": ""
-                            },
-                            {
-                                "type": "number",
                                 "value": "",
                                 "validation": {
-                                    "on": [
-                                        {
-                                            "label": "14th Day M5",
-                                            "value": 14,
-                                            "id": 1
-                                        },
-                                        {
-                                            "label": "28th Day M5",
-                                            "value": 28,
-                                            "id": 2
-                                        },
-                                        {
-                                            "label": "14th Day 7.5",
-                                            "value": 14,
-                                            "id": 3
-                                        },
-                                        {
-                                            "label": "28th Day 7.5",
-                                            "value": 28,
-                                            "id": 4
-                                        }
-                                    ],
                                     "formula": "<"
                                 }
                             },
@@ -799,7 +780,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -849,7 +830,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -884,7 +865,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -956,15 +937,12 @@
                     "name": "Cube test",
                     "type": "Table",
                     "isRequired": true,
+                    "isMulti": true,
                     "value": [
                         [
                             {
                                 "type": "label",
                                 "value": "Mixing Ratio,"
-                            },
-                            {
-                                "type": "label",
-                                "value": "Days"
                             },
                             {
                                 "type": "label",
@@ -981,49 +959,35 @@
                                 "value": "",
                                 "options": [
                                     {
-                                        "label": "M5",
-                                        "value": "M5",
+                                        "label": "14th Day M5",
                                         "meta": "1 Cement, 5 Sand, 10 Coarse aggregate",
+                                        "value": 14,
                                         "id": 1
                                     },
                                     {
-                                        "label": "M7.5",
-                                        "value": "M7.5",
-                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
+                                        "label": "28th Day M5",
+                                        "value": 28,
+                                        "meta": "1 Cement, 5 Sand, 10 Coarse aggregate",
                                         "id": 2
+                                    },
+                                    {
+                                        "label": "14th Day 7.5",
+                                        "value": 14,
+                                        "id": 3,
+                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate"
+                                    },
+                                    {
+                                        "label": "28th Day 7.5",
+                                        "value": 28,
+                                        "id": 4,
+                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate"
                                     }
                                 ]
                             },
                             {
                                 "type": "number",
-                                "value": ""
-                            },
-                            {
-                                "type": "number",
                                 "value": "",
                                 "validation": {
-                                    "on": [
-                                        {
-                                            "label": "14th Day M5",
-                                            "value": 14,
-                                            "id": 1
-                                        },
-                                        {
-                                            "label": "28th Day M5",
-                                            "value": 28,
-                                            "id": 2
-                                        },
-                                        {
-                                            "label": "14th Day 7.5",
-                                            "value": 14,
-                                            "id": 3
-                                        },
-                                        {
-                                            "label": "28th Day 7.5",
-                                            "value": 28,
-                                            "id": 4
-                                        }
-                                    ],
                                     "formula": "<"
                                 }
                             },
@@ -1103,7 +1067,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -1134,7 +1098,7 @@
             "measurement": {
                 "name": "L*B*H",
                 "UOM": "CUM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -1177,7 +1141,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -1299,7 +1263,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -1369,7 +1333,7 @@
             "measurement": {
                 "name": "L*B*H",
                 "UOM": "CUM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -1412,7 +1376,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -1534,7 +1498,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -1579,7 +1543,7 @@
             "measurement": {
                 "name": "Running meter Kgs",
                 "UOM": "KGs",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -1618,7 +1582,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE_VALUE",
                             "formula": "*"
                         }
                     ]
@@ -1656,7 +1620,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -1691,7 +1655,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -1763,15 +1727,12 @@
                     "name": "Cube test",
                     "type": "Table",
                     "isRequired": true,
+                    "isMulti": true,
                     "value": [
                         [
                             {
                                 "type": "label",
                                 "value": "Mixing Ratio,"
-                            },
-                            {
-                                "type": "label",
-                                "value": "Days"
                             },
                             {
                                 "type": "label",
@@ -1788,49 +1749,35 @@
                                 "value": "",
                                 "options": [
                                     {
-                                        "label": "M5",
-                                        "value": "M5",
+                                        "label": "14th Day M5",
                                         "meta": "1 Cement, 5 Sand, 10 Coarse aggregate",
+                                        "value": 14,
                                         "id": 1
                                     },
                                     {
-                                        "label": "M7.5",
-                                        "value": "M7.5",
-                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
+                                        "label": "28th Day M5",
+                                        "value": 28,
+                                        "meta": "1 Cement, 5 Sand, 10 Coarse aggregate",
                                         "id": 2
+                                    },
+                                    {
+                                        "label": "14th Day 7.5",
+                                        "value": 14,
+                                        "id": 3,
+                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate"
+                                    },
+                                    {
+                                        "label": "28th Day 7.5",
+                                        "value": 28,
+                                        "id": 4,
+                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate"
                                     }
                                 ]
                             },
                             {
                                 "type": "number",
-                                "value": ""
-                            },
-                            {
-                                "type": "number",
                                 "value": "",
                                 "validation": {
-                                    "on": [
-                                        {
-                                            "label": "14th Day M5",
-                                            "value": 14,
-                                            "id": 1
-                                        },
-                                        {
-                                            "label": "28th Day M5",
-                                            "value": 28,
-                                            "id": 2
-                                        },
-                                        {
-                                            "label": "14th Day 7.5",
-                                            "value": 14,
-                                            "id": 3
-                                        },
-                                        {
-                                            "label": "28th Day 7.5",
-                                            "value": 28,
-                                            "id": 4
-                                        }
-                                    ],
                                     "formula": "<"
                                 }
                             },
@@ -1910,7 +1857,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -1985,6 +1932,7 @@
                     "name": "Leak test",
                     "type": "Table",
                     "isRequired": true,
+                    "isMulti": true,
                     "value": [
                         [
                             {
@@ -2021,7 +1969,7 @@
             "measurement": {
                 "name": "Length",
                 "UOM": "RM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -2082,7 +2030,7 @@
             "measurement": {
                 "name": "L*B*H",
                 "UOM": "CUM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -2125,7 +2073,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -2163,7 +2111,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -2198,7 +2146,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -2235,7 +2183,7 @@
             "measurement": {
                 "name": "L*B*H",
                 "UOM": "CUM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -2278,7 +2226,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -2413,7 +2361,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -2470,7 +2418,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -2527,7 +2475,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -2562,7 +2510,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -2691,7 +2639,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -2820,7 +2768,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -2865,7 +2813,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -2900,7 +2848,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -2945,7 +2893,7 @@
             "measurement": {
                 "name": "Running meter Kgs",
                 "UOM": "KGs",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -2984,7 +2932,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE_VALUE",
                             "formula": "*"
                         }
                     ]
@@ -3054,7 +3002,7 @@
             "measurement": {
                 "name": "Length",
                 "UOM": "RM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -3161,15 +3109,12 @@
                     "name": "Cube test",
                     "type": "Table",
                     "isRequired": true,
+                    "isMulti": true,
                     "value": [
                         [
                             {
                                 "type": "label",
                                 "value": "Mixing Ratio,"
-                            },
-                            {
-                                "type": "label",
-                                "value": "Days"
                             },
                             {
                                 "type": "label",
@@ -3186,49 +3131,35 @@
                                 "value": "",
                                 "options": [
                                     {
-                                        "label": "M5",
-                                        "value": "M5",
+                                        "label": "14th Day M5",
                                         "meta": "1 Cement, 5 Sand, 10 Coarse aggregate",
+                                        "value": 14,
                                         "id": 1
                                     },
                                     {
-                                        "label": "M7.5",
-                                        "value": "M7.5",
-                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
+                                        "label": "28th Day M5",
+                                        "value": 28,
+                                        "meta": "1 Cement, 5 Sand, 10 Coarse aggregate",
                                         "id": 2
+                                    },
+                                    {
+                                        "label": "14th Day 7.5",
+                                        "value": 14,
+                                        "id": 3,
+                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate"
+                                    },
+                                    {
+                                        "label": "28th Day 7.5",
+                                        "value": 28,
+                                        "id": 4,
+                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate"
                                     }
                                 ]
                             },
                             {
                                 "type": "number",
-                                "value": ""
-                            },
-                            {
-                                "type": "number",
                                 "value": "",
                                 "validation": {
-                                    "on": [
-                                        {
-                                            "label": "14th Day M5",
-                                            "value": 14,
-                                            "id": 1
-                                        },
-                                        {
-                                            "label": "28th Day M5",
-                                            "value": 28,
-                                            "id": 2
-                                        },
-                                        {
-                                            "label": "14th Day 7.5",
-                                            "value": 14,
-                                            "id": 3
-                                        },
-                                        {
-                                            "label": "28th Day 7.5",
-                                            "value": 28,
-                                            "id": 4
-                                        }
-                                    ],
                                     "formula": "<"
                                 }
                             },
@@ -3301,7 +3232,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -3380,15 +3311,12 @@
                     "name": "Cube test",
                     "type": "Table",
                     "isRequired": true,
+                    "isMulti": true,
                     "value": [
                         [
                             {
                                 "type": "label",
                                 "value": "Mixing Ratio,"
-                            },
-                            {
-                                "type": "label",
-                                "value": "Days"
                             },
                             {
                                 "type": "label",
@@ -3405,49 +3333,35 @@
                                 "value": "",
                                 "options": [
                                     {
-                                        "label": "M5",
-                                        "value": "M5",
+                                        "label": "14th Day M5",
                                         "meta": "1 Cement, 5 Sand, 10 Coarse aggregate",
+                                        "value": 14,
                                         "id": 1
                                     },
                                     {
-                                        "label": "M7.5",
-                                        "value": "M7.5",
-                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate",
+                                        "label": "28th Day M5",
+                                        "value": 28,
+                                        "meta": "1 Cement, 5 Sand, 10 Coarse aggregate",
                                         "id": 2
+                                    },
+                                    {
+                                        "label": "14th Day 7.5",
+                                        "value": 14,
+                                        "id": 3,
+                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate"
+                                    },
+                                    {
+                                        "label": "28th Day 7.5",
+                                        "value": 28,
+                                        "id": 4,
+                                        "meta": "1 Cement, 4 Sand, 8 Coarse aggregate"
                                     }
                                 ]
                             },
                             {
                                 "type": "number",
-                                "value": ""
-                            },
-                            {
-                                "type": "number",
                                 "value": "",
                                 "validation": {
-                                    "on": [
-                                        {
-                                            "label": "14th Day M5",
-                                            "value": 14,
-                                            "id": 1
-                                        },
-                                        {
-                                            "label": "28th Day M5",
-                                            "value": 28,
-                                            "id": 2
-                                        },
-                                        {
-                                            "label": "14th Day 7.5",
-                                            "value": 14,
-                                            "id": 3
-                                        },
-                                        {
-                                            "label": "28th Day 7.5",
-                                            "value": 28,
-                                            "id": 4
-                                        }
-                                    ],
                                     "formula": "<"
                                 }
                             },
@@ -3527,7 +3441,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -3642,7 +3556,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -3709,7 +3623,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -3744,7 +3658,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -3793,7 +3707,7 @@
             "measurement": {
                 "name": "Length",
                 "UOM": "RM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -3870,7 +3784,7 @@
             "measurement": {
                 "name": "Switch Count",
                 "UOM": "Nos",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -3915,7 +3829,7 @@
                     "value": {
                         "name": "Framing",
                         "UOM": "NOs",
-                        "ismulti": true,
+                        "isMulti": true,
                         "data": [
                             [
                                 {
@@ -4000,6 +3914,7 @@
                     "name": "Leak Test",
                     "type": "Table",
                     "isRequired": true,
+                    "isMulti": true,
                     "value": [
                         [
                             {
@@ -4021,25 +3936,25 @@
                         ],
                         [
                             {
-                                "type": "text",
-                                "value": ""
+                                "type": "dropdown",
+                                "value": "",
+                                "options": [
+                                    {
+                                        "label": "1/8",
+                                        "value": 1230,
+                                        "id": 1
+                                    },
+                                    {
+                                        "label": "1/4",
+                                        "value": 1130,
+                                        "id": 2
+                                    }
+                                ]
                             },
                             {
                                 "type": "number",
                                 "value": "",
                                 "validation": {
-                                    "on": [
-                                        {
-                                            "label": "1/8",
-                                            "value": 1230,
-                                            "id": 1
-                                        },
-                                        {
-                                            "label": "1/4",
-                                            "value": 1130,
-                                            "id": 2
-                                        }
-                                    ],
                                     "formula": "<"
                                 }
                             },
@@ -4066,7 +3981,7 @@
             "measurement": {
                 "name": "AC Conduit",
                 "UOM": "RM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -4162,7 +4077,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -4197,7 +4112,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -4263,7 +4178,7 @@
             "measurement": {
                 "name": "Structural Steel",
                 "UOM": "Kg",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -4373,6 +4288,7 @@
                     "name": "Leak test",
                     "type": "Table",
                     "isRequired": true,
+                    "isMulti": true,
                     "value": [
                         [
                             {
@@ -4413,18 +4329,6 @@
                                 "type": "number",
                                 "value": "",
                                 "validation": {
-                                    "on": [
-                                        {
-                                            "label": "1/8",
-                                            "value": 1230,
-                                            "id": 1
-                                        },
-                                        {
-                                            "label": "1/4",
-                                            "value": 1130,
-                                            "id": 2
-                                        }
-                                    ],
                                     "formula": "<"
                                 }
                             },
@@ -4451,7 +4355,7 @@
             "measurement": {
                 "name": "Length",
                 "UOM": "RM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -4530,7 +4434,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -4565,7 +4469,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -4614,7 +4518,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -4649,7 +4553,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -4697,6 +4601,7 @@
                     "name": "Leak test",
                     "type": "Table",
                     "isRequired": true,
+                    "isMulti": true,
                     "value": [
                         [
                             {
@@ -4737,18 +4642,6 @@
                                 "type": "number",
                                 "value": "",
                                 "validation": {
-                                    "on": [
-                                        {
-                                            "label": "1/8",
-                                            "value": 1230,
-                                            "id": 1
-                                        },
-                                        {
-                                            "label": "1/4",
-                                            "value": 1130,
-                                            "id": 2
-                                        }
-                                    ],
                                     "formula": "<"
                                 }
                             },
@@ -4768,7 +4661,7 @@
             "measurement": {
                 "name": "Length",
                 "UOM": "RM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -4829,7 +4722,7 @@
             "measurement": {
                 "name": "L*B*H",
                 "UOM": "CUM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -4872,7 +4765,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -4923,7 +4816,7 @@
             "measurement": {
                 "name": "L*B*H",
                 "UOM": "CUM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -4966,7 +4859,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -4997,7 +4890,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -5032,7 +4925,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -5118,7 +5011,7 @@
             "measurement": {
                 "name": "Length",
                 "UOM": "RM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -5219,7 +5112,7 @@
             "measurement": {
                 "name": "Length",
                 "UOM": "RM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -5291,7 +5184,7 @@
             "measurement": {
                 "name": "False Ceiling Support",
                 "UOM": "Nos",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -5372,7 +5265,7 @@
             "measurement": {
                 "name": "False Ceiling",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -5780,7 +5673,7 @@
                     "value": {
                         "name": "Framing",
                         "UOM": "NOs",
-                        "ismulti": true,
+                        "isMulti": true,
                         "data": [
                             [
                                 {
@@ -5866,7 +5759,7 @@
                     "value": {
                         "name": "Framing",
                         "UOM": "NOs",
-                        "ismulti": true,
+                        "isMulti": true,
                         "data": [
                             [
                                 {
@@ -5952,7 +5845,7 @@
                     "value": {
                         "name": "Framing",
                         "UOM": "NOs",
-                        "ismulti": true,
+                        "isMulti": true,
                         "data": [
                             [
                                 {
@@ -6037,7 +5930,7 @@
                     "value": {
                         "name": "Framing",
                         "UOM": "NOs",
-                        "ismulti": true,
+                        "isMulti": true,
                         "data": [
                             [
                                 {
@@ -6284,6 +6177,7 @@
                     "name": "Pressure test",
                     "type": "Table",
                     "isRequired": true,
+                    "isMulti": true,
                     "value": [
                         [
                             {
@@ -6324,18 +6218,6 @@
                                 "type": "number",
                                 "value": "",
                                 "validation": {
-                                    "on": [
-                                        {
-                                            "label": "1/8",
-                                            "value": 1230,
-                                            "id": 1
-                                        },
-                                        {
-                                            "label": "1/4",
-                                            "value": 1130,
-                                            "id": 2
-                                        }
-                                    ],
                                     "formula": "<"
                                 }
                             },
@@ -6443,7 +6325,7 @@
             "measurement": {
                 "name": "Internal Paint",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -6523,7 +6405,7 @@
             "measurement": {
                 "name": "l*b",
                 "UOM": "SqM",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -6558,7 +6440,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "COMPUTE",
+                            "computeType": "COMPUTE",
                             "formula": "*"
                         }
                     ]
@@ -6641,7 +6523,7 @@
             "measurement": {
                 "name": "Earthing values",
                 "UOM": "Nos",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {
@@ -6699,7 +6581,7 @@
             "measurement": {
                 "name": "Electrical Fittings",
                 "UOM": "Nos",
-                "ismulti": true,
+                "isMulti": true,
                 "data": [
                     [
                         {

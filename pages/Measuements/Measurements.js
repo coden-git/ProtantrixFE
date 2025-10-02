@@ -1,39 +1,27 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable } from 'react-native';
-import Header from '../components/Header/header';
-import colors from '../styles/colorPallete';
+import React, { useState, useMemo } from 'react';
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView } from 'react-native';
+import Header from '../../components/Header/header';
+import colors from '../../styles/colorPallete';
 import { useNavigation } from '@react-navigation/native';
+import LotMeasurment from './LotMeasurments';
+import TableMeasurment from './TableMeasurments';
 
 export default function Measurements({ route }) {
-    const {measurement, onMeasurementChange} = route?.params;
-    console.log('Measurements data:', measurement);
+    const { measurement, onMeasurementChange } = route?.params;
+    console.log('Measurements data:', JSON.stringify(measurement));
     const navigation = useNavigation();
 
     // If measurement type is LOT, show UOM, Name and numeric input for value
-    const isLot = measurement && (measurement.type || '').toUpperCase() === 'LOT';
     const [measurementVal, setMeasurement] = useState(measurement);
 
     const renderMeasurementDetails = () => {
-        if (isLot) {
-            const onChangeValue = (t) => {
-                const cleaned = t.replace(/[^0-9.]/g, '');
-                setMeasurement((m) => ({ ...m, value: cleaned }));
-            }
-            return (
-                <View>
-                    <Text style={styles.label}>Unit of measurement (UOM):</Text>
-                    <Text style={styles.value}>{measurement.UOM}</Text>
+        if (!measurement) return null;
+        if ((measurement.type || '').toUpperCase() === 'LOT') {
+            return <LotMeasurment measurement={measurementVal} setMeasurement={setMeasurement}/>;
+        }
 
-                    <Text style={[styles.label, { marginTop: 12 }]}>Value:</Text>
-                    <TextInput
-                        style={styles.input}
-                        keyboardType="numeric"
-                        value={String(measurementVal.value)}
-                        onChangeText={onChangeValue}
-                        placeholder="Enter numeric value"
-                    />
-                </View>
-            )
+        if ((measurement.type || '').toLowerCase() === 'table') {
+           return <TableMeasurment measurement={measurementVal} setMeasurement={setMeasurement} />
         }
         return <Text style={styles.placeholder}>Measurement type not supported yet.</Text>
 
@@ -71,4 +59,9 @@ const styles = StyleSheet.create({
     footer: { padding: 16, borderTopWidth: 1, borderTopColor: colors.lighterGrey, backgroundColor: colors.fullwhite },
     saveButton: { backgroundColor: colors.primary, paddingVertical: 14, borderRadius: 8, alignItems: 'center' },
     saveButtonText: { color: colors.fullwhite, fontWeight: '700', fontSize: 16 },
+    tableRow: { flexDirection: 'row', alignItems: 'center', marginVertical: 6 },
+    tableCell: { minWidth: 120, paddingHorizontal: 8 },
+    tableHeader: { fontWeight: '700' },
+    inputSmall: { borderWidth: 1, borderColor: '#ddd', padding: 6, borderRadius: 6 },
+    addRow: { marginTop: 10, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 6, borderWidth: 1, borderColor: colors.primary, alignSelf: 'flex-start' },
 });
