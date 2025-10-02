@@ -3986,12 +3986,12 @@
         {
             "poValue": [
                 {
-                    "label": 3.175,
+                    "label": "1/8 3.175",
                     "value": 100,
                     "id": 1
                 },
                 {
-                    "label": 6.35,
+                    "label": "1/4 6.35",
                     "value": 100,
                     "id": 2
                 }
@@ -4079,7 +4079,7 @@
                         },
                         {
                             "type": "label",
-                            "value": "Nos"
+                            "value": "Meter"
                         }
                     ],
                     [
@@ -4088,13 +4088,13 @@
                             "value": "",
                             "options": [
                                 {
-                                    "label": "1/8",
-                                    "value": 3.175,
+                                    "label": "1/8 3.175",
+                                    "value": "1/8 3.175",
                                     "id": 1
                                 },
                                 {
-                                    "label": "1/4",
-                                    "value": 6.35,
+                                    "label": "1/4 6.35",
+                                    "value": "1/4 6.35",
                                     "id": 2
                                 }
                             ]
@@ -4690,13 +4690,9 @@
             "checkLists": [
                 {
                     "name": "Slope test",
-                    "type": "DateRange",
+                    "type": "checkbox",
+                    "value": "",
                     "isRequired": true,
-                    "value": {
-                        "to": "",
-                        "from": ""
-                    },
-                    "validation": 10,
                     "id": 1
                 },
                 {
@@ -5282,18 +5278,24 @@
             "id": 54
         },
         {
-            "poValue": "",
-            "name": "False ceiling grid laying",
+            "poValue": [
+                {
+                    "label": "Ceiling support",
+                    "value": 100
+                }
+            ],
+            "poTrigger": "value",
+            "name": "Ceiling Supports",
             "checkLists": [
                 {
-                    "name": "Level check",
+                    "name": "Dimension check",
                     "type": "checkbox",
                     "value": "",
                     "isRequired": true,
                     "id": 1
                 },
                 {
-                    "name": "Supporting",
+                    "name": "End Connection Check",
                     "type": "checkbox",
                     "value": "",
                     "isRequired": true,
@@ -5330,6 +5332,32 @@
                 "type": "table"
             },
             "id": 55
+        },
+        {
+            "poValue": "",
+            "name": "False ceiling grid laying",
+            "checkLists": [
+                {
+                    "name": "Level check",
+                    "type": "checkbox",
+                    "value": "",
+                    "isRequired": true,
+                    "id": 1
+                },
+                {
+                    "name": "Supporting",
+                    "type": "checkbox",
+                    "value": "",
+                    "isRequired": true,
+                    "id": 2
+                }
+            ],
+            "measurement": {
+                "UOM": "LOT",
+                "value": "",
+                "type": "LOT"
+            },
+            "id": 56
         },
         {
             "poValue": [
@@ -5427,7 +5455,7 @@
                 "finalTotal": "name",
                 "type": "table"
             },
-            "id": 56
+            "id": 57
         },
         {
             "poValue": [],
@@ -5447,7 +5475,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 57
+            "id": 58
         },
         {
             "poValue": [],
@@ -5473,7 +5501,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 58
+            "id": 59
         },
         {
             "poValue": [],
@@ -5513,7 +5541,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 59
+            "id": 60
         },
         {
             "poValue": [],
@@ -5560,7 +5588,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 60
+            "id": 61
         },
         {
             "poValue": [
@@ -5613,7 +5641,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 61
+            "id": 62
         },
         {
             "poValue": [
@@ -5666,7 +5694,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 62
+            "id": 63
         },
         {
             "poValue": [
@@ -5719,7 +5747,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 63
+            "id": 64
         },
         {
             "poValue": [
@@ -5751,7 +5779,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 64
+            "id": 65
         },
         {
             "poValue": [
@@ -5783,7 +5811,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 65
+            "id": 66
         },
         {
             "poValue": [
@@ -5854,7 +5882,7 @@
                 }
             ],
             "measurement": "SAME_AS_PO",
-            "id": 66
+            "id": 67
         },
         {
             "poValue": [
@@ -5925,7 +5953,7 @@
                 }
             ],
             "measurement": "SAME_AS_PO",
-            "id": 67
+            "id": 68
         },
         {
             "poValue": [
@@ -5995,7 +6023,7 @@
                 }
             ],
             "measurement": "SAME_AS_PO",
-            "id": 68
+            "id": 69
         },
         {
             "poValue": [
@@ -6066,7 +6094,7 @@
                 }
             ],
             "measurement": "SAME_AS_PO",
-            "id": 69
+            "id": 70
         },
         {
             "poValue": [
@@ -6112,7 +6140,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 70
+            "id": 71
         },
         {
             "poValue": [
@@ -6144,7 +6172,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 71
+            "id": 72
         },
         {
             "poValue": [
@@ -6169,7 +6197,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 72
+            "id": 73
         },
         {
             "poValue": [
@@ -6201,7 +6229,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 73
+            "id": 74
         },
         {
             "poValue": [
@@ -6226,7 +6254,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 74
+            "id": 75
         },
         {
             "name": "Utility equipment installation",
@@ -6305,7 +6333,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 75
+            "id": 76
         },
         {
             "poValue": [],
@@ -6331,29 +6359,24 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 76
+            "id": 77
         },
         {
             "poValue": [
                 {
-                    "label": "20 mm",
+                    "label": "Apex Ultima",
                     "value": 100,
                     "id": 1
                 },
                 {
-                    "label": "25 mm",
+                    "label": "Nerolac Excel Mica",
                     "value": 100,
                     "id": 2
                 },
                 {
-                    "label": "32 mm",
+                    "label": "Asian Paint Royale Aspira",
                     "value": 100,
                     "id": 3
-                },
-                {
-                    "label": "40 mm",
-                    "value": 100,
-                    "id": 4
                 }
             ],
             "name": "Internal Paint application",
@@ -6427,7 +6450,7 @@
                 "finalTotal": "name",
                 "type": "table"
             },
-            "id": 77
+            "id": 78
         },
         {
             "poValue": [
@@ -6462,52 +6485,11 @@
                 }
             ],
             "measurement": {
-                "name": "l*b",
                 "UOM": "SqM",
-                "isMulti": true,
-                "data": [
-                    [
-                        {
-                            "type": "label",
-                            "value": "Name"
-                        },
-                        {
-                            "type": "label",
-                            "value": "Length (m)"
-                        },
-                        {
-                            "type": "label",
-                            "value": "Breadth (m)"
-                        },
-                        {
-                            "type": "label",
-                            "value": "total (kgs)"
-                        }
-                    ],
-                    [
-                        {
-                            "type": "text",
-                            "value": ""
-                        },
-                        {
-                            "type": "number",
-                            "value": ""
-                        },
-                        {
-                            "type": "number",
-                            "value": ""
-                        },
-                        {
-                            "type": "label",
-                            "computeType": "COMPUTE",
-                            "formula": "*"
-                        }
-                    ]
-                ],
-                "finalTotal": "total",
-                "type": "table"
+                "value": "",
+                "type": "LOT"
             },
-            "id": 78
+            "id": 79
         },
         {
             "poValue": [
@@ -6532,7 +6514,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 79
+            "id": 80
         },
         {
             "poValue": [],
@@ -6565,7 +6547,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 80
+            "id": 81
         },
         {
             "poValue": [],
@@ -6616,7 +6598,7 @@
                 "finalTotal": false,
                 "type": "table"
             },
-            "id": 81
+            "id": 82
         },
         {
             "poValue": [],
@@ -6674,7 +6656,7 @@
                 "finalTotal": "total",
                 "type": "table"
             },
-            "id": 82
+            "id": 83
         },
         {
             "poValue": [
@@ -6698,7 +6680,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 83
+            "id": 84
         },
         {
             "poValue": [],
@@ -6724,7 +6706,7 @@
                 "value": "",
                 "type": "LOT"
             },
-            "id": 84
+            "id": 85
         }
     ]
 }
