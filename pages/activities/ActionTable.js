@@ -7,6 +7,7 @@ import { FileUpload, Header } from "../../components";
 import { getDocumentAsync } from "expo-document-picker";
 import { useNavigation } from "@react-navigation/native";
 import axios from 'axios'
+import { BACKEND_URL } from "../../config";
 
 const ActionTable = ({ route }) => {
     const { item, updateActivity } = route.params || {};
@@ -94,7 +95,7 @@ const ActionTable = ({ route }) => {
                         name: `file-${Date.now()}-${img.name}`,
                     });
                     formData.append('path', 'activities');
-                    const resp = await axios.post(`https://437bc430c7be.ngrok-free.app/api/v1/project/upload-form`, formData, {
+                    const resp = await axios.post(`${BACKEND_URL}/v1/project/upload-form`, formData, {
                         headers: { 'Content-Type': 'multipart/form-data' },
                         timeout: 60000,
                     });

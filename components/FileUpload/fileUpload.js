@@ -9,6 +9,7 @@ import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 import axios from 'axios';
 import { Linking } from 'react-native';
+import { BACKEND_URL } from "../../config";
 
 
 const FileUpload = ({onPick, value, selected, label}) => {
@@ -23,7 +24,7 @@ const FileUpload = ({onPick, value, selected, label}) => {
       // Build request to backend to get presigned URL.
       // Use app-specific base URL; fallback to localhost path used in development.
       const encodedPath = encodeURIComponent(value);
-      const downloadUrl = `https://437bc430c7be.ngrok-free.app/api/v1/project/download/${encodedPath}`;
+      const downloadUrl = `${BACKEND_URL}/v1/project/download/${encodedPath}`;
 
       const resp = await axios.get(downloadUrl);
       if (!resp || !resp.data || !resp.data.url) {

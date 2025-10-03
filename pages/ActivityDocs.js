@@ -8,6 +8,7 @@ import { Platform } from 'react-native';
 import colors from '../styles/colorPallete';
 import { FileUpload } from '../components';
 import { useNavigation } from '@react-navigation/native';
+import {BACKEND_URL} from '../config'
 
 
 export default function ActivityDocs({ route }) {
@@ -75,7 +76,7 @@ export default function ActivityDocs({ route }) {
         formData.append('path', 'activities');
 
         try {
-          const resp = await axios.post(`https://437bc430c7be.ngrok-free.app/api/v1/project/upload-form`, formData, {
+          const resp = await axios.post(`${BACKEND_URL}/v1/project/upload-form`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
             timeout: 60000,
           });

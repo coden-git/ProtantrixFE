@@ -6,6 +6,7 @@ import { Checkbox, DateRange, Header } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../styles/colorPallete';
 import { MultiSelect } from "react-native-element-dropdown";
+import { BACKEND_URL } from '../../config';
 
 
 export default function ActivityDetail({ route }) {
@@ -223,7 +224,7 @@ export default function ActivityDetail({ route }) {
             setSaving(true);
 
             // Use appropriate host for your dev environment. Update as needed.
-            const url = `https://437bc430c7be.ngrok-free.app/api/v1/projects/${projectId}/activities/${activityId}`;
+            const url = `${BACKEND_URL}/v1/projects/${projectId}/activities/${activityId}`;
 
             const res = await axios.put(url, activity, { timeout: 30000 });
             if (res && res.data && res.data.ok) {

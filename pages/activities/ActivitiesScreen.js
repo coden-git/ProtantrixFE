@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Header } from '../../components';
 import colors from '../../styles/colorPallete';
+import { BACKEND_URL } from '../../config';
 
 export default function ActivitiesScreen() {
   const navigation = useNavigation();
@@ -46,7 +47,7 @@ export default function ActivitiesScreen() {
     setError(null);
 
     try {
-      const res = await axios.get(`https://437bc430c7be.ngrok-free.app/api/v1/projects/${projectId}/activities`);
+      const res = await axios.get(`${BACKEND_URL}/v1/projects/${projectId}/activities`);
       if (cancelled) return;
       if (res && res.data && res.data.ok) {
         setData(res.data.activities || []);
