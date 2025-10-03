@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, TouchableOpacity, TextInput, ActivityIndicator, Button } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -10,19 +10,10 @@ import { BACKEND_URL } from '../../config';
 
 export default function ActivitiesScreen() {
   const navigation = useNavigation();
-  // If this screen is used to show activities for a specific project, it
-  // expects a route param named `projectId` (which maps to Project.uuid).
-  // If not provided, fallback to showing an empty list.
-  const route = navigation.getState && navigation.getState().routes ? null : null;
-  const params = (navigation && navigation.getState && navigation.getState().routes)
-    ? null
-    : null;
-
-  // We'll read projectId from route params via the navigation prop if available.
-  // The navigator usually provides route in props, but with hooks we can use
-  // useRoute(); however to avoid importing another hook, the caller should
-  // pass projectId via navigation params when navigating to this screen.
-  const projectId = 'ee7dc6fa-ceaf-458a-9ab9-d1e8770be764'
+  const route = useRoute();
+  
+  // Get projectId from navigation params
+  const projectId = route.params?.projectId;
 
   const [data, setData] = useState([]);
   const [query, setQuery] = useState('');

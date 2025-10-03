@@ -9,7 +9,8 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 import colors from '../../styles/colorPallete';
 import axios from 'axios'
 import {BACKEND_URL} from '../../config.js'
@@ -47,6 +48,13 @@ export default function HomeScreen() {
     fetchProjects();
   }, [fetchProjects]);
 
+  // Refetch projects when screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      fetchProjects();
+    }, [fetchProjects])
+  );
+
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     fetchProjects({ page: 1, limit: 100, skipLoading: true });
@@ -54,20 +62,26 @@ export default function HomeScreen() {
 
   const openActivities = (project) => {
     const parent = navigation.getParent();
-    if (parent) parent.navigate('Activities', { projectId: project._id });
-    else navigation.navigate('Activities', { projectId: project._id });
+    if (parent) parent.navigate('Activities', { projectId: project.uuid });
+    else navigation.navigate('Activities', { projectId: project.uuid });
   };
 
   const renderProject = ({ item }) => (
     <TouchableOpacity style={styles.card} onPress={() => openActivities(item)}>
       <View style={styles.cardLeft}>
-        <View style={styles.iconPlaceholder} />
+        <View style={styles.iconContainer}>
+          <Ionicons name="briefcase-outline" size={20} color="black" />
+        </View>
         <View style={styles.cardText}>
           <Text style={styles.cardTitle}>{item.name}</Text>
-          <Text style={styles.cardSubtitle}>{item.description}</Text>
+          <Text style={styles.cardSubtitle}>
+            {item.description && item.description.length > 30 
+              ? `${item.description.substring(0, 30)}...` 
+              : item.description || ''}
+          </Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('EditProject', { projectId: item._id })}>
+      <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('CreateProject', { project: item })}>
         <Text style={styles.editText}>✎</Text>
       </TouchableOpacity>
     </TouchableOpacity>
@@ -140,7 +154,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   cardLeft: { flexDirection: 'row', alignItems: 'center' },
-  iconPlaceholder: {
+  iconContainer: {
     width: 44,
     height: 44,
     borderRadius: 8,

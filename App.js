@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActionTable, ActivitiesScreen, ActivityDocs, AddPo, Measurements } from './pages';
 import ActivityDetail from './pages/activities/ActivityDetail';
 import colors from './styles/colorPallete';
+import CreateProject from './pages/CreateProject';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
             <Stack.Screen name="Measurements" component={Measurements} />
             <Stack.Screen name="ActivityDocs" component={ActivityDocs} />
             <Stack.Screen name="ActionTable" component={ActionTable} />
+            <Stack.Screen name="CreateProject" component={CreateProject} />
 
           </Stack.Navigator>
         </NavigationContainer>

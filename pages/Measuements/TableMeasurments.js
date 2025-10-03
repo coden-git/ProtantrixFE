@@ -25,7 +25,7 @@ const TableMeasurment = ({ measurement, setMeasurement }) => {
     const addRow = () => {
         if (!templateRow || !Array.isArray(templateRow)) return;
         // create a fresh row based on template (clear values for inputs)
-        const newRow = templateRow.map((cell) => ({ ...cell, value: cell.type === 'label' ? cell.value : '' }));
+        const newRow = templateRow.map((cell) => ({ ...cell, value: cell.type === 'label' ? cell.value : '', disabled: false }));
         setRows((r) => [...r, newRow]);
     };
 
