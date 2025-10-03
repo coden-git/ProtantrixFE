@@ -39,7 +39,8 @@ export default function ActivityDetail({ route }) {
                         valueField="value"
                         placeholder={`Select ${item.name}`}
                         value={item.value}
-                        onChange={(select) => updateActivity(index, select)}
+                        disabled={item.disabled === true}
+                        onChange={(select) => item.disabled === true ? null : updateActivity(index, select)}
                         // style for selected items (chips/pills)
                         selectedStyle={styles.selectedItem}
                         selectedTextStyle={styles.selectedText}
@@ -62,7 +63,8 @@ export default function ActivityDetail({ route }) {
                     <Checkbox
                         label={item.name}
                         value={Boolean(item.value)}
-                        onClick={(v) => updateActivity(index, v)}
+                        disabled={item.disabled === true}
+                        onClick={(v) => item.disabled === true ? null : updateActivity(index, v)}
                     />
                 </View>
             );
@@ -86,7 +88,8 @@ export default function ActivityDetail({ route }) {
                     <Text style={styles.label}>{item.name}</Text>
                     <DateRange
                         value={item.value || { from: '', to: '' }}
-                        onChange={(val) => updateActivity(index, val)}
+                        disabled={item.disabled === true}
+                        onChange={(val) => item.disabled === true ? null : updateActivity(index, val)}
                     />
                 </View>
             );

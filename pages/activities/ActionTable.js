@@ -142,7 +142,13 @@ const ActionTable = ({ route }) => {
                                     <TextInput value={cell.value} onChangeText={(t) => updateCell(ri, ci, t)} style={styles.inputSmall} />
                                 )}
                                 {cell.type === 'number' && (
-                                    <TextInput value={String(cell.value || '')} onChangeText={(t) => updateCell(ri, ci, t)} keyboardType="numeric" style={styles.inputSmall} />
+                                    <TextInput
+                                        value={String(cell.value || '')}
+                                        onChangeText={(t) => cell.disabled === true ? null : updateCell(ri, ci, t)}
+                                        keyboardType="numeric"
+                                        style={[styles.inputSmall, cell.disabled === true && styles.inputDisabled]}
+                                        editable={cell.disabled !== true}
+                                    />
                                 )}
                                 {cell.type === 'dropdown' && (
                                     <Dropdown
@@ -158,7 +164,8 @@ const ActionTable = ({ route }) => {
                                                 {opt.meta ? <Text style={styles.itemMeta}>{opt.meta}</Text> : null}
                                             </View>
                                         )}
-                                        onChange={(item) => updateCell(ri, ci, item.value)}
+                                        disabled={cell.disabled === true}
+                                        onChange={(item) => cell.disabled === true ? null : updateCell(ri, ci, item.value)}
                                     />
                                 )}
                                 {cell.type === 'image' && (
@@ -196,6 +203,7 @@ const styles = StyleSheet.create({
     tableCell: { minWidth: 120, paddingHorizontal: 8 },
     tableHeader: { fontWeight: '700' },
     inputSmall: { borderWidth: 1, borderColor: '#ddd', padding: 6, borderRadius: 6 },
+    inputDisabled: { backgroundColor: '#f5f5f5', color: colors.lightGrey },
     addRow: { marginTop: 10, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 6, borderWidth: 1, borderColor: colors.primary, alignSelf: 'flex-start' },
 
     /* Card styles for row presentation */

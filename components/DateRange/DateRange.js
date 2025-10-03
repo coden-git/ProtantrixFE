@@ -10,7 +10,7 @@ import colors from "../../styles/colorPallete";
  * value: { from: ISOstring | '', to: ISOstring | '' }
  * onChange: (newValue) => void
  */
-const DateRange = ({ value, onChange }) => {
+const DateRange = ({ value, onChange, disabled = false }) => {
     const [showPicker, setShowPicker] = useState({ which: null });
 
     const show = (which) => setShowPicker({ which });
@@ -34,12 +34,12 @@ const DateRange = ({ value, onChange }) => {
 
     return (
         <View style={{ flexDirection: 'row', paddingLeft: 10 }}>
-            <Pressable style={styles.dateBtn} onPress={() => show('from')}>
-                <Text style={styles.dateBtnText}>From: {display(value?.from)}</Text>
-            </Pressable>
-            <Pressable style={styles.dateBtn} onPress={() => show('to')}>
-                <Text style={styles.dateBtnText}>To: {display(value?.to)}</Text>
-            </Pressable>
+                <Pressable style={[styles.dateBtn, disabled && styles.dateBtnDisabled]} onPress={() => !disabled && show('from')} disabled={disabled}>
+                    <Text style={styles.dateBtnText}>From: {display(value?.from)}</Text>
+                </Pressable>
+                <Pressable style={[styles.dateBtn, disabled && styles.dateBtnDisabled]} onPress={() => !disabled && show('to')} disabled={disabled}>
+                    <Text style={styles.dateBtnText}>To: {display(value?.to)}</Text>
+                </Pressable>
             {showPicker.which && (
                 <DateTimePicker
                     value={new Date()}
@@ -56,6 +56,7 @@ const DateRange = ({ value, onChange }) => {
 const styles = StyleSheet.create({
     dateBtn: { paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, borderWidth: 1, borderColor: colors.offWhite },
     dateBtnText: { color: colors.fullBlack }
+    ,dateBtnDisabled: { opacity: 0.5, borderColor: colors.lighterGrey }
 });
 
 export default DateRange;

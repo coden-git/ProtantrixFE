@@ -81,14 +81,16 @@ export default function ActivitiesScreen() {
   const renderItem = ({ item, index }) => {
     const name = typeof item === 'string' ? item : (item && (item.name || item.title)) || 'Unnamed activity';
     const payload = typeof item === 'string' ? { name } : item;
+    const disabled = !!(payload && payload.disabled === true);
 
     return (
       <Pressable
         onPress={() => navigation.navigate('ActivityDetail', { activity: payload, projectId })}
-        style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
+        disabled={disabled}
+        style={({ pressed }) => [styles.row, pressed && styles.rowPressed, disabled && styles.rowDisabled]}
       >
         <Text style={styles.rowText}>{index + 1}. {name}</Text>
-        <Ionicons name="chevron-forward" size={20} color={colors.fullBlack} style={styles.icon} />
+        {!disabled && <Ionicons name="chevron-forward" size={20} color={colors.fullBlack} style={styles.icon} />}
       </Pressable>
     );
   };
@@ -171,6 +173,7 @@ const styles = StyleSheet.create({
   rowPressed: {
     backgroundColor: colors.offWhite,
   },
+  rowDisabled: { opacity: 0.5 },
   icon: {
     marginLeft: 'auto',
   },
