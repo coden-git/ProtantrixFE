@@ -13,7 +13,7 @@ import CreateProject from './pages/CreateProject';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [signedIn, setSignedIn] = useState(true);
+  const [signedIn, setSignedIn] = useState(false);
 
   return (
     <View style={styles.container}>

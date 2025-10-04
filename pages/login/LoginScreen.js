@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Image,
   Text,
@@ -7,81 +6,137 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
-import { useState } from 'react';
 import colors from '../../styles/colorPallete';
+import { BACKEND_URL } from '../../config';
+import { AuthContext } from '../../context/AuthContext';
 
 const Login = ({ onLoginSuccess }) => {
-  const [username, setUsername] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const passwordRef = useRef(null);
+  const auth = React.useContext(AuthContext);
 
-  function handleLogin() {
+  async function handleLogin() {
     setError('');
-    // simple local validation; replace with real auth as needed
-    if (!username.trim() || !password.trim()) {
-      setError('Please enter both username and password');
+    if (!phone.trim() || !password.trim()) {
+      setError('Please enter both phone and password');
       return;
     }
-
-    // Here you'd call your backend/auth logic. For now assume success.
-    if (typeof onLoginSuccess === 'function') {
-      onLoginSuccess();
+    // basic phone normalization
+    const cleanPhone = phone.replace(/\D/g, '');
+    if (cleanPhone.length !== 10) {
+      setError('Phone must be 10 digits');
+      return;
+    }
+    setLoading(true);
+    try {
+      const url = `${BACKEND_URL.replace(/\/$/, '')}/user/login`;
+      const res = await axios.post(url, { phone: cleanPhone, password });
+      if (!res.data || !res.data.ok) {
+        throw new Error(res.data?.error || 'Login failed');
+      }
+      const { token, user, expiresIn } = res.data;
+      await AsyncStorage.multiSet([
+        ['auth.token', token],
+        ['auth.user', JSON.stringify(user)],
+        ['auth.expiresIn', expiresIn || ''],
+      ]);
+      // call context login to sync state
+      auth?.login && auth.login(token, user, expiresIn);
+      if (typeof onLoginSuccess === 'function') {
+        onLoginSuccess(user);
+      }
+    } catch (e) {
+      setError(e.message || 'Login error');
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('../../assets/Pro Tantrix Logo.png')}
-        style={styles.logo}
-      />
-      <Text style={styles.label}>Username</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your username"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
-      />
-      <Text style={styles.label}>Password</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-
-      {error ? <Text style={{ color: 'red', marginBottom: 10 }}>{error}</Text> : null}
-
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-    </View>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={{ flex: 1 }}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={styles.inner}>
+              <Image
+                source={require('../../assets/Pro Tantrix Logo.png')}
+                style={styles.logo}
+              />
+              <Text style={styles.label}>Phone</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your phone"
+                value={phone}
+                onChangeText={setPhone}
+                keyboardType="phone-pad"
+                autoCapitalize="none"
+                returnKeyType="next"
+                onSubmitEditing={() => passwordRef.current?.focus?.()}
+              />
+              <Text style={styles.label}>Password</Text>
+              <TextInput
+                ref={passwordRef}
+                style={styles.input}
+                placeholder="Enter your password"
+                secureTextEntry
+                value={password}
+                onChangeText={setPassword}
+                returnKeyType="done"
+                onSubmitEditing={handleLogin}
+              />
+              {error ? <Text style={styles.error}>{error}</Text> : null}
+              <View style={{ height: 140 }} />
+            </View>
+          </ScrollView>
+          <TouchableOpacity
+            style={[styles.button, loading && { opacity: 0.7 }]}
+            onPress={handleLogin}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color={colors.fullwhite} />
+            ) : (
+              <Text style={styles.buttonText}>Login</Text>
+            )}
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.fullwhite,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logo: {
-    width: 250,
-    height: 125,
-    resizeMode: 'contain',
-    marginBottom: 50,
-  },
+  scrollContent: { flexGrow: 1, justifyContent: 'center' },
+  inner: { alignItems: 'center' },
+  logo: { width: 250, height: 125, resizeMode: 'contain', marginBottom: 50 },
   label: {
     alignSelf: 'flex-start',
-    marginLeft: '10%',
+    width: '80%',
     fontSize: 16,
     color: colors.fullBlack,
     marginBottom: 5,
+    paddingLeft: 40,
   },
   input: {
     width: '80%',
@@ -95,6 +150,7 @@ const styles = StyleSheet.create({
   button: {
     position: 'absolute',
     bottom: 40,
+    alignSelf: 'center',
     width: '80%',
     height: 50,
     backgroundColor: colors.primary,
@@ -102,10 +158,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonText: {
-    color: colors.fullwhite,
-    fontSize: 18,
-  },
+  buttonText: { color: colors.fullwhite, fontSize: 18 },
+  error: { color: 'red', marginBottom: 10 },
 });
 
 export default Login;
