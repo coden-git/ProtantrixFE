@@ -5,6 +5,7 @@ import colors from '../../styles/colorPallete';
 import { useNavigation } from '@react-navigation/native';
 import LotMeasurment from './LotMeasurments';
 import TableMeasurment from './TableMeasurments';
+import ActionModal from '../../components/ActionModal/ActionModal';
 
 export default function Measurements({ route }) {
     const { measurement, onMeasurementChange } = route?.params;
@@ -13,6 +14,7 @@ export default function Measurements({ route }) {
 
     // If measurement type is LOT, show UOM, Name and numeric input for value
     const [measurementVal, setMeasurement] = useState(measurement);
+    const [confirmVisible, setConfirmVisible] = useState(false);
 
     const renderMeasurementDetails = () => {
         if (!measurement) return null;
@@ -31,6 +33,7 @@ export default function Measurements({ route }) {
         if (onMeasurementChange && typeof onMeasurementChange === 'function') {
             onMeasurementChange(measurementVal);
         }
+        setConfirmVisible(false);
         navigation.goBack();
     }
 
@@ -43,10 +46,21 @@ export default function Measurements({ route }) {
                 {measurement && renderMeasurementDetails()}
             </View>
             <View style={styles.footer}>
-                <Pressable style={styles.saveButton} onPress={onSave}>
+                <Pressable style={styles.saveButton} onPress={() => setConfirmVisible(true)}>
                     <Text style={styles.saveButtonText}>Save</Text>
                 </Pressable>
             </View>
+            <ActionModal
+                visible={confirmVisible}
+                title="Save Measurement"
+                message="Are you sure you want to save these measurement changes?"
+                isCancel
+                isConfirm
+                confirmLabel="Save"
+                cancelLabel="Cancel"
+                onClose={() => setConfirmVisible(false)}
+                onAction={(type) => { if (type === 'confirm') onSave(); }}
+            />
         </View>
     );
 }

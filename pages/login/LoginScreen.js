@@ -14,7 +14,7 @@ import {
   Keyboard,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import api from '../../api/client';
 
 import colors from '../../styles/colorPallete';
 import { BACKEND_URL } from '../../config';
@@ -42,8 +42,9 @@ const Login = ({ onLoginSuccess }) => {
     }
     setLoading(true);
     try {
-      const url = `${BACKEND_URL.replace(/\/$/, '')}/user/login`;
-      const res = await axios.post(url, { phone: cleanPhone, password });
+      const url = `${BACKEND_URL.replace(/\/$/, '')}/v1/user/login`;
+  const res = await api.post('/user/login', { phone: cleanPhone, password });
+      console.log('login response', res.data);
       if (!res.data || !res.data.ok) {
         throw new Error(res.data?.error || 'Login failed');
       }

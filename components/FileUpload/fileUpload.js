@@ -7,13 +7,15 @@ import colors from "../../styles/colorPallete";
 // See: https://docs.expo.dev/versions/v54.0.0/sdk/filesystem/
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
-import axios from 'axios';
+import api from '../../api/client';
 import { Linking } from 'react-native';
 import { BACKEND_URL } from "../../config";
+import { AuthContext } from '../../context/AuthContext';
 
 
 const FileUpload = ({onPick, value, selected, label}) => {
   const [loading, setLoading] = useState(false);
+  const auth = React.useContext(AuthContext);
 
   const onViewFile = async () => {
     try {
@@ -26,7 +28,7 @@ const FileUpload = ({onPick, value, selected, label}) => {
       const encodedPath = encodeURIComponent(value);
       const downloadUrl = `${BACKEND_URL}/v1/project/download/${encodedPath}`;
 
-      const resp = await axios.get(downloadUrl);
+  const resp = await api.get(`/project/download/${encodedPath}`);
       if (!resp || !resp.data || !resp.data.url) {
         throw new Error('No download URL returned');
       }

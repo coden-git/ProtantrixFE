@@ -10,10 +10,11 @@ import {
   Alert,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import axios from 'axios';
+import api from '../api/client';
 import { Dropdown } from 'react-native-element-dropdown';
 import colors from '../styles/colorPallete';
 import { BACKEND_URL } from '../config';
+import { AuthContext } from '../context/AuthContext';
 
 const STATUS_OPTIONS = [
   { label: 'Ready', value: 'READY' },
@@ -27,6 +28,7 @@ export default function CreateProject() {
   const route = useRoute();
   const projectData = route.params?.project;
   const isEditing = !!projectData;
+  const auth = React.useContext(AuthContext);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -62,10 +64,10 @@ export default function CreateProject() {
 
       if (isEditing) {
         // Update existing project
-        response = await axios.put(`${BACKEND_URL}/v1/projects/${projectData.uuid}`, payload);
+        response = await api.put(`/projects/${projectData.uuid}`, payload);
       } else {
         // Create new project
-        response = await axios.post(`${BACKEND_URL}/v1/projects/create`, payload);
+        response = await api.post(`/projects/create`, payload);
       }
 
       if (response.data && response.data.ok) {

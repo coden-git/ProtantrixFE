@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, TouchableOpacity, TextInput, ActivityIndicator, Button } from 'react-native';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
-import axios from 'axios';
+import api from '../../api/client';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Header } from '../../components';
@@ -38,7 +38,7 @@ export default function ActivitiesScreen() {
     setError(null);
 
     try {
-      const res = await axios.get(`${BACKEND_URL}/v1/projects/${projectId}/activities`);
+  const res = await api.get(`/projects/${projectId}/activities`);
       if (cancelled) return;
       if (res && res.data && res.data.ok) {
         setData(res.data.activities || []);

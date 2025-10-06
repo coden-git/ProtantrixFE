@@ -3,21 +3,25 @@ import { View, Text, StyleSheet, FlatList, Pressable, Alert } from 'react-native
 import Header from '../components/Header/header';
 import { getDocumentAsync } from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
-import axios from 'axios';
+import api from '../api/client';
 import { Platform } from 'react-native';
 import colors from '../styles/colorPallete';
 import { FileUpload } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import {BACKEND_URL} from '../config'
+import { AuthContext } from '../context/AuthContext';
+import ActionModal from '../components/ActionModal/ActionModal';
 
 
 export default function ActivityDocs({ route }) {
   const { uploads = [], onActivityChange } = route.params
   const navigation = useNavigation();
+  const auth = React.useContext(AuthContext);
 
 
   // keep track of selected files per upload item
   const [selected, setSelected] = useState({});
+  const [confirmVisible, setConfirmVisible] = useState(false);
 
   useEffect(() => {
     // reset selection when uploads change
@@ -63,10 +67,9 @@ export default function ActivityDocs({ route }) {
       for (let i = 0; i < keys.length; i++) {
         const file = selected[i];
         if (file?.value) {
-          results.push({...file})
+          results.push({ ...file });
           continue;
         }
-
         const formData = new FormData();
         formData.append('file', {
           uri: file.uri,
@@ -74,25 +77,18 @@ export default function ActivityDocs({ route }) {
           name: `file-${Date.now()}-${file.name}`,
         });
         formData.append('path', 'activities');
-
         try {
-          const resp = await axios.post(`${BACKEND_URL}/v1/project/upload-form`, formData, {
+          const resp = await api.post('/project/upload-form', formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
             timeout: 60000,
           });
-          console.log(resp.data, 'response')
           if (resp && resp.data && resp.data.ok) {
-            results.push({...uploads[i], value:resp?.data?.result})
+            results.push({ ...uploads[i], value: resp?.data?.result });
           }
         } catch (err) {
           console.warn('Upload error', err);
         }
       }
-
-      
-
-
-      // notify parent about upload results
       onActivityChange && onActivityChange(results);
       navigation.goBack();
     } catch (err) {
@@ -100,6 +96,7 @@ export default function ActivityDocs({ route }) {
       Alert.alert('Upload failed', 'Could not upload files');
     } finally {
       setUploading(false);
+      setConfirmVisible(false);
     }
   };
 
@@ -125,12 +122,23 @@ export default function ActivityDocs({ route }) {
       <View style={styles.footer}>
         <Pressable
           style={[styles.uploadAll, (noFileSelected || uploading) && styles.uploadAllDisabled]}
-          onPress={uploadAll}
+          onPress={() => setConfirmVisible(true)}
           disabled={noFileSelected || uploading}
         >
           {uploading ? <Text style={styles.uploadAllText}>Preparing...</Text> : <Text style={styles.uploadAllText}>Upload all</Text>}
         </Pressable>
       </View>
+      <ActionModal
+        visible={confirmVisible}
+        title="Upload Documents"
+        message="Proceed with uploading all selected documents?"
+        isCancel
+        isConfirm
+        confirmLabel="Upload"
+        cancelLabel="Cancel"
+        onClose={() => setConfirmVisible(false)}
+        onAction={(type) => { if (type === 'confirm') uploadAll(); }}
+      />
     </View>
   );
 }

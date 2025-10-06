@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, Alert, Platform, ActivityIndicator } from 'react-native';
-import axios from 'axios';
+import api from '../../api/client';
 import { Ionicons } from '@expo/vector-icons';
 import { Checkbox, DateRange, Header } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../styles/colorPallete';
 import { MultiSelect } from "react-native-element-dropdown";
 import { BACKEND_URL } from '../../config';
+import { AuthContext } from '../../context/AuthContext';
+import ActionModal from '../../components/ActionModal/ActionModal';
 
 
 export default function ActivityDetail({ route }) {
     const { activity: initialActivity, projectId } = route.params || {};
     const navigation = useNavigation();
+    const auth = React.useContext(AuthContext);
     // local editable copy
     const [activity, setActivity] = useState(() => ({
         ...(initialActivity || {}),
     }));
     const [saving, setSaving] = useState(false);
+    const [confirmVisible, setConfirmVisible] = useState(false);
 
 
     console.log(activity)
@@ -102,7 +106,7 @@ export default function ActivityDetail({ route }) {
     const uploads = activity.checkLists?.filter(it => (it.type || '').toLowerCase() === 'fileupload') || [];
 
 
-    const onActivityChange = (updatedActivities = []) => {
+    const onActivityChange = async(updatedActivities = []) => {
         // updatedActivities is expected to be an array of objects that include an id matching the checklist item id
         console.log('Received uploaded items:', updatedActivities);
         setActivity((prev) => {
@@ -119,16 +123,24 @@ export default function ActivityDetail({ route }) {
             });
             return next;
         });
+        await setTimeout(() => {
+            
+        }, 100);
+        await onSave({goBack: false});
     };
 
 
-    const onMeasurementChange = (updatedMeasurement) => {
+    const onMeasurementChange = async(updatedMeasurement) => {
         console.log('Received updated measurement:', updatedMeasurement);
         setActivity((prev) => {
             const next = { ...prev };
             next.measurement = updatedMeasurement;
             return next;
         });
+        await setTimeout(() => {
+            
+        }, 100);
+        await onSave({goBack: false})
     };
 
     const onPoChange = (updatedPo) => {
@@ -207,7 +219,7 @@ export default function ActivityDetail({ route }) {
         }
     }
 
-    const onSave = async () => {
+    const onSave = async ({ goBack = true }) => {
         // Save handler: call backend to update activity
         try {
             if (!projectId) {
@@ -222,15 +234,14 @@ export default function ActivityDetail({ route }) {
             }
 
             setSaving(true);
-
-            // Use appropriate host for your dev environment. Update as needed.
-            const url = `${BACKEND_URL}/v1/projects/${projectId}/activities/${activityId}`;
-
-            const res = await axios.put(url, activity, { timeout: 30000 });
+            console.log('Saving activity', activityId);
+            const res = await api.put(`/projects/${projectId}/activities/${activityId}`, activity, { timeout: 30000 });
             if (res && res.data && res.data.ok) {
-                // success -> go back
-                navigation.goBack();
+                if (goBack) {
+                    navigation.goBack();
+                }
             } else {
+                console.log('Save activity failed response', res && res.data);
                 throw new Error((res && res.data && res.data.error) || 'Failed to save');
             }
         } catch (err) {
@@ -238,6 +249,7 @@ export default function ActivityDetail({ route }) {
             Alert.alert('Failed to save', String(err && err.message ? err.message : err), [{ text: 'OK' }]);
         } finally {
             setSaving(false);
+            setConfirmVisible(false);
         }
     }
 
@@ -284,12 +296,23 @@ export default function ActivityDetail({ route }) {
             <View style={styles.footer}>
                 <Pressable
                     style={[styles.saveButton, saving && styles.saveButtonDisabled]}
-                    onPress={onSave}
+                    onPress={() => setConfirmVisible(true)}
                     disabled={saving}
                 >
                     {saving ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveButtonText}>Save</Text>}
                 </Pressable>
             </View>
+            <ActionModal
+                visible={confirmVisible}
+                title="Save Changes"
+                message="Are you sure you want to save the updates to this activity?"
+                isCancel
+                isConfirm
+                confirmLabel="Save"
+                cancelLabel="Cancel"
+                onClose={() => setConfirmVisible(false)}
+                onAction={(type) => { if (type === 'confirm') onSave({goBack: true}); }}
+            />
         </View>
     );
 }

@@ -12,11 +12,13 @@ import {
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../../styles/colorPallete';
-import axios from 'axios'
+import api from '../../api/client'
 import {BACKEND_URL} from '../../config.js'
+import { AuthContext } from '../../context/AuthContext';
 
 export default function HomeScreen() {
   const navigation = useNavigation();
+  const auth = React.useContext(AuthContext);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -26,8 +28,12 @@ export default function HomeScreen() {
     setError(null);
     if (!opts.skipLoading) setLoading(true);
     try {
-      const resp = await axios.get(`${BACKEND_URL}/v1/projects/list`, {
-        params: { page: opts.page, limit: opts.limit },
+      if (!auth?.token) {
+        setError('Not authenticated');
+        return;
+      }
+      const resp = await api.get('/projects/list', {
+        params: { page: opts.page, limit: opts.limit }
       });
       const json = resp.data;
       if (json && json.ok && Array.isArray(json.items)) {
@@ -42,7 +48,7 @@ export default function HomeScreen() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  }, [auth?.token]);
 
   useEffect(() => {
     fetchProjects();

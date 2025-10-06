@@ -6,13 +6,15 @@ import { Dropdown } from "react-native-element-dropdown";
 import { FileUpload, Header } from "../../components";
 import { getDocumentAsync } from "expo-document-picker";
 import { useNavigation } from "@react-navigation/native";
-import axios from 'axios'
+import api from '../../api/client'
 import { BACKEND_URL } from "../../config";
+import { AuthContext } from '../../context/AuthContext';
 
 const ActionTable = ({ route }) => {
     const { item, updateActivity } = route.params || {};
     const [images, setImages] = useState([[]]);
     const navigation = useNavigation();
+    const auth = React.useContext(AuthContext);
 
     // Helpers for table type
     const isTable = (item && (item.type || '').toLowerCase() === 'table');
@@ -95,7 +97,7 @@ const ActionTable = ({ route }) => {
                         name: `file-${Date.now()}-${img.name}`,
                     });
                     formData.append('path', 'activities');
-                    const resp = await axios.post(`${BACKEND_URL}/v1/project/upload-form`, formData, {
+                    const resp = await api.post('/project/upload-form', formData, {
                         headers: { 'Content-Type': 'multipart/form-data' },
                         timeout: 60000,
                     });

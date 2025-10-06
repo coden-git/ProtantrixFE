@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState, useCallback, useMemo } from 'react';
+import api, { setAuthToken, registerUnauthorizedHandler } from '../api/client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthContext = createContext({
@@ -29,9 +30,11 @@ export function AuthProvider({ children }) {
         try { parsed = JSON.parse(storedUser); } catch { parsed = null; }
         setToken(storedToken);
         setUser(parsed);
+        setAuthToken(storedToken);
       } else {
         setToken(null);
         setUser(null);
+        setAuthToken(null);
       }
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -46,6 +49,7 @@ export function AuthProvider({ children }) {
   const login = useCallback(async (tokenValue, userObj, expiresIn) => {
     setToken(tokenValue);
     setUser(userObj);
+    setAuthToken(tokenValue);
     await AsyncStorage.multiSet([
       [TOKEN_KEY, tokenValue || ''],
       [USER_KEY, JSON.stringify(userObj || {})],
@@ -56,6 +60,7 @@ export function AuthProvider({ children }) {
   const logout = useCallback(async () => {
     setToken(null);
     setUser(null);
+    setAuthToken(null);
     await AsyncStorage.multiRemove([TOKEN_KEY, USER_KEY, EXPIRES_KEY]);
   }, []);
 
@@ -71,6 +76,14 @@ export function AuthProvider({ children }) {
     logout,
     refresh,
   }), [loading, token, user, login, logout, refresh]);
+
+  useEffect(() => {
+    // Register a single unauthorized handler (runs once)
+    registerUnauthorizedHandler(async () => {
+      // Auto logout on 401
+      await logout();
+    });
+  }, [logout]);
 
   return (
     <AuthContext.Provider value={value}>
