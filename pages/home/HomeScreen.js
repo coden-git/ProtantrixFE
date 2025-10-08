@@ -68,8 +68,8 @@ export default function HomeScreen() {
 
   const openActivities = (project) => {
     const parent = navigation.getParent();
-    if (parent) parent.navigate('Activities', { projectId: project.uuid });
-    else navigation.navigate('Activities', { projectId: project.uuid });
+    if (parent) parent.navigate('Activities', { projectId: project.uuid, projectName: project.name });
+    else navigation.navigate('Activities', { projectId: project.uuid, projectName: project.name });
   };
 
   const renderProject = ({ item }) => (

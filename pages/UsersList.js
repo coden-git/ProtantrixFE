@@ -38,7 +38,7 @@ export default function UsersList() {
   useFocusEffect(useCallback(() => { load(); }, [load]));
 
   const openUser = (u) => {
-    navigation.navigate('AddUser', { user: { name: u.name, phone: u.phone, role: u.role, id: u._id, isActive: u.isActive } });
+    navigation.navigate('AddUser', { user: { ...u, id: u._id } });
   };
 
   const renderItem = ({ item }) => (

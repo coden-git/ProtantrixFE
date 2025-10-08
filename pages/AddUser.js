@@ -6,6 +6,7 @@ import api from '../api/client';
 import { Dropdown } from 'react-native-element-dropdown';
 import Header from '../components/Header/header';
 import ActionModal from '../components/ActionModal/ActionModal';
+import { MultiSelect } from 'react-native-element-dropdown';
 
 const ROLE_OPTIONS = [
     { label: 'User', value: 'user' },
@@ -28,8 +29,9 @@ export default function AddUser() {
     const [error, setError] = useState('');
     const [touched, setTouched] = useState({});
     const [confirmVisible, setConfirmVisible] = useState(false);
-    const id = editingUser?.id || null;
-
+    const [projects, setProjects] = useState([]); // fetched list
+    const [selectedProjects, setSelectedProjects] = useState(editingUser?.projects || []);
+    const id = editingUser?.id 
     useEffect(() => {
         if (editingUser) {
             setName(editingUser.name || '');
@@ -37,6 +39,29 @@ export default function AddUser() {
             setRole(editingUser.role || 'user');
         }
     }, [editingUser]);
+
+    useEffect(() => {
+        // fetch projects list (limit 1000)
+        let mounted = true;
+        const loadProjects = async () => {
+            try {
+                const res = await api.get('/projects/list', { params: { limit: 1000 } });
+                if (res?.data && mounted) {
+                    const list = Array.isArray(res.data.items) ? res.data.items : (res.data.data || []);
+                    // normalize each project to { uuid, name }
+                    const normalized = list.map(p => ({ uuid: p.uuid, name: p.name }));
+                    setProjects(normalized.filter(p => p.uuid && p.name));
+                    if(editingUser?.projects?.length) {
+                        selectedProjects(editingUser.projects)
+                    }
+                }
+            } catch (err) {
+                console.warn('Failed to load projects', err?.message);
+            }
+        };
+        loadProjects();
+        return () => { mounted = false; };
+    }, []);
 
     const markTouched = (field) => setTouched(prev => ({ ...prev, [field]: true }));
     const cleanPhone = (p) => String(p || '').replace(/\D/g, '');
@@ -69,15 +94,16 @@ export default function AddUser() {
         }
         setLoading(true);
         try {
+            const projectPayload = selectedProjects.map(p => (typeof p === 'string' ? { uuid: p, name: (projects.find(pr => pr.uuid === p)?.name) || '' } : p));
             if (isEdit) {
                 if (!id) throw new Error('Missing user id');
-                const payload = { name: name.trim(), role };
+                const payload = { name: name.trim(), role, projects: projectPayload };
                 const res = await api.patch(`/user/${id}`, payload);
                 if (!res?.data?.ok) throw new Error(res?.data?.error || 'Failed to update user');
                 navigation.goBack();
                 // Alert.alert('Success', 'User updated', [{ text: 'OK', onPress: () => navigation.goBack() }]);
             } else {
-                const payload = { name: name.trim(), phone: phoneDigits, password, role };
+                const payload = { name: name.trim(), phone: phoneDigits, password, role, projects: projectPayload };
                 const res = await api.post('/user/create', payload);
                 if (!res?.data?.ok) throw new Error(res?.data?.error || 'Failed to create user');
                 navigation.goBack();
@@ -87,7 +113,7 @@ export default function AddUser() {
         } finally {
             setLoading(false);
         }
-    }, [valid, name, phoneDigits, password, role, confirm, isEdit, navigation]);
+    }, [valid, name, phoneDigits, password, role, confirm, isEdit, navigation, selectedProjects, projects]);
 
     const handleDelete = useCallback(() => {
         if (!isEdit) return;
@@ -127,6 +153,14 @@ export default function AddUser() {
                 return '';
         }
     };
+
+    // derive multi-select value as array of uuids
+    const selectedProjectIds = useMemo(() => selectedProjects.map(p => (typeof p === 'string' ? p : p.uuid)), [selectedProjects]);
+
+    const projectOptions = useMemo(() => projects.map(p => ({ label: p.name, value: p.uuid })), [projects]);
+
+    console.log({ pr: selectedProjects });
+
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -214,6 +248,31 @@ export default function AddUser() {
                     </View>
                 )}
 
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Projects Access</Text>
+                    <View style={styles.fieldWrapper}>
+                        <MultiSelect
+                            style={styles.dropdown}
+                            data={projectOptions}
+                            labelField="label"
+                            valueField="value"
+                            placeholder={projectOptions.length ? 'Select projects' : 'Loading projects...'}
+                            value={selectedProjectIds}
+                            onChange={(items) => {
+                                // items is array of values
+                                const mapped = items.map(v => projects.find(p => p.uuid === v)).filter(Boolean);
+                                setSelectedProjects(mapped);
+                            }}
+                            disable={projects.length === 0}
+                            selectedStyle={styles.selectedItem}
+                            selectedTextStyle={styles.selectedText}
+                            chipStyle={styles.selectedItem}
+                            chipTextStyle={styles.selectedText}
+                        />
+                        
+                    </View>
+                </View>
+
                 {error ? <Text style={styles.globalError}>{error}</Text> : null}
             </ScrollView>
             <View style={styles.footer}>
@@ -227,6 +286,7 @@ export default function AddUser() {
                     </TouchableOpacity>
                 )}
             </View>
+            
             {isEdit && (
                 <ActionModal
                     visible={confirmVisible}
@@ -277,5 +337,8 @@ const styles = StyleSheet.create({
     footer: { padding: 16, backgroundColor: '#fff' },
     globalError: { color: colors.red, textAlign: 'center', paddingHorizontal: 16, marginBottom: 12, fontWeight: '500' },
     banner: { backgroundColor: '#eef7ff', padding: 12, borderRadius: 10, marginBottom: 20, borderWidth: 1, borderColor: '#d4e9ff' },
-    bannerText: { color: '#2b5773', fontSize: 12, fontWeight: '500', lineHeight: 16 }
+    bannerText: { color: '#2b5773', fontSize: 12, fontWeight: '500', lineHeight: 16 },
+    selectedItem: { backgroundColor: colors.fullwhite, borderRadius: 16, paddingHorizontal: 10, paddingVertical: 6, margin: 4, borderWidth: 1, borderColor: colors.lighterGrey },
+    selectedText: { color: colors.fullBlack, fontSize: 13 },
+    helperNote: { marginTop: 6, fontSize: 11, color: colors.lightGrey },
 });
