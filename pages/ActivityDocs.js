@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, Alert } from 'react-native';
 import Header from '../components/Header/header';
 import { getDocumentAsync } from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system';
 import api from '../api/client';
 import { Platform } from 'react-native';
 import colors from '../styles/colorPallete';
@@ -26,7 +25,6 @@ export default function ActivityDocs({ route }) {
   useEffect(() => {
     // reset selection when uploads change
     const data = {}
-    console.log('uplaods', uploads)
     uploads.forEach((ele, index)=> (data[index] = {...ele}))
     setSelected(data);
   }, [uploads]);
@@ -35,9 +33,7 @@ export default function ActivityDocs({ route }) {
   const pickFor = async (item, index) => {
 
     try {
-      console.log(item)
       const res = await getDocumentAsync({ type: item.mimeTypes, multiple: false });
-      console.log(res, 'uploadres')
       if (res.canceled) return;
       setSelected((s) => ({ ...s, [index]: res.assets[0] }));
     } catch (err) {

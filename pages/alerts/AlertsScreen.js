@@ -16,7 +16,7 @@ export default function AlertsScreen() {
   const [actioningUuid, setActioningUuid] = useState(null); // uuid currently being approved/rejected
   const [actioningStatus, setActioningStatus] = useState(null); // target status (COMPLETED/REJECTED)
   const pageSizeRef = useRef(100); // fixed page size from backend
-  const { role } = useContext(AuthContext);
+  const { role, name: currentUserName } = useContext(AuthContext);
 
   const handleDecision = useCallback(async (uuid, status) => {
     if (!uuid || !status) return;
@@ -25,10 +25,17 @@ export default function AlertsScreen() {
     try {
       const res = await api.post(`/alerts/approve-reject/${uuid}?status=${status}`);
       if (res?.data?.ok) {
-        // Update specific alert in local state
+        // Prefer server returned alert if provided
+        const updated = res.data.alert || res.data.updated || null;
         setAlerts(prev => prev.map(a => {
           if (a.uuid === uuid) {
-            return { ...a, status, approvedOn: new Date().toISOString() };
+            if (updated) return { ...a, ...updated };
+            return { 
+              ...a, 
+              status, 
+              approvedOn: new Date().toISOString(),
+              approvedBy: a.approvedBy || { name: currentUserName || 'Admin', userId: 'self' }
+            };
           }
           return a;
         }));
@@ -105,6 +112,12 @@ export default function AlertsScreen() {
           {item.activity && item.activity.activityName ? ` · ${item.activity.activityName}` : ''}
         </Text>
         <Text style={styles.metaSmall}>{item.requestedOn ? new Date(item.requestedOn).toLocaleString() : ''}</Text>
+        {item.approvedBy?.name && item.status === 'COMPLETED' && (
+          <Text style={styles.metaSmall}>Approved by {item.approvedBy.name}</Text>
+        )}
+        {item.approvedBy?.name && item.status === 'REJECTED' && (
+          <Text style={styles.metaSmall}>Rejected by {item.approvedBy.name}</Text>
+        )}
         {role === 'admin' && pending && (
           <View style={styles.actionRow}>
             <TouchableOpacity

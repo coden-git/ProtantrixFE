@@ -108,7 +108,6 @@ const ActionTable = ({ route }) => {
             }
 
 
-            console.log('Saving table data', next)
             updateActivity([headers, ...next]);
             navigation.goBack();
         } catch (err) {
@@ -122,7 +121,6 @@ const ActionTable = ({ route }) => {
 
 
 
-    console.log('rows=', JSON.stringify(rows))
 
 
     return (

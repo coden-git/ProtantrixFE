@@ -110,11 +110,19 @@ export default function ActivitiesScreen() {
     return (
       <View style={[styles.rowWrapper, disabled && styles.rowWrapperDisabled]}>
         <Pressable
-          onPress={() => !disabled && navigation.navigate('ActivityDetail', { activity: payload, projectId })}
+          onPress={() => !disabled && navigation.navigate('ActivityDetail', { activity: payload, projectId, projectName })}
           disabled={disabled}
           style={({ pressed }) => [styles.row, pressed && !disabled && styles.rowPressed, disabled && styles.rowDisabled]}
         >
           <Text style={styles.rowText}>{index + 1}. {name}</Text>
+          {item && item.isNewComment && (
+            <Ionicons
+              name="ellipse"
+              size={12}
+              color="#f5c400" /* yellow indicator for new comments */
+              style={styles.newCommentIcon}
+            />
+          )}
           {!disabled && <Ionicons name="chevron-forward" size={20} color={colors.fullBlack} style={styles.icon} />}
         </Pressable>
         {disabled && (
@@ -197,6 +205,7 @@ const styles = StyleSheet.create({
   rowDisabled: { opacity: 0.5 },
   icon: { marginLeft: 'auto' },
   rowText: { fontSize: 16, flex: 1 },
+  newCommentIcon: { marginHorizontal: 6 },
   searchRow: { flexDirection: 'row', alignItems: 'center', marginVertical: 12 },
   searchInput: { flex: 1, borderWidth: 1, borderColor: colors.offWhite, padding: 8, borderRadius: 8 },
   clearBtn: { marginLeft: 8 },
