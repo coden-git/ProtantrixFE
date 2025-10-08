@@ -1,14 +1,16 @@
 import React, { use, useMemo, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View, ActivityIndicator } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View, ActivityIndicator, Alert } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import colors from "../../styles/colorPallete";
 import { Dropdown } from "react-native-element-dropdown";
 import { FileUpload, Header } from "../../components";
 import { getDocumentAsync } from "expo-document-picker";
+import * as FileSystem from 'expo-file-system/legacy';
 import { useNavigation } from "@react-navigation/native";
 import api from '../../api/client'
 import { BACKEND_URL } from "../../config";
 import { AuthContext } from '../../context/AuthContext';
+import { MAX_FILE_SIZE } from '../../utils';
 
 const ActionTable = ({ route }) => {
     const { item, updateActivity } = route.params || {};
@@ -60,14 +62,29 @@ const ActionTable = ({ route }) => {
     };
 
     const pickFor = async (rowIndex, colIndex, item) => {
-
         try {
-            const res = await getDocumentAsync({ type: '*/*', multiple: false });
+            const res = await getDocumentAsync({ type: ['image/*', 'application/pdf'], multiple: false, copyToCacheDirectory: true });
             if (res.canceled) return;
+            const file = res.assets && res.assets[0];
+            if (!file) return;
+
+
+            let size = file.size;
+            if (size == null) {
+                try {
+                    const info = await FileSystem.getInfoAsync(file.uri);
+                    if (info?.exists && typeof info.size === 'number') size = info.size;
+                } catch (_) { /* ignore fallback error */ }
+            }
+            if (typeof size === 'number' && size > MAX_FILE_SIZE) {
+                Alert.alert('File Too Large', 'Maximum allowed size is 10 MB.');
+                return;
+            }
+
             setImages((imgs) => {
-                const next = imgs.map((r) => r.map((c) => c)).filter((_, i) => i !== rowIndex);
+                const next = imgs.map((r) => r.slice());
                 if (!next[rowIndex]) next[rowIndex] = [];
-                next[rowIndex][colIndex] = res.assets[0];
+                next[rowIndex][colIndex] = { ...file, size, mimeType: mime };
                 return next;
             });
         } catch (err) {
@@ -173,6 +190,7 @@ const ActionTable = ({ route }) => {
                                     <FileUpload
                                         onPick={() => pickFor(ri, ci, cell)}
                                         value={cell.value}
+                                        showDelete={false}
                                         selected={images[ri] ? images[ri][ci] : null}
                                     />
                                 )}

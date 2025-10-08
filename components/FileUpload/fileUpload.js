@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View, ActivityIndicator, Alert, Platform } from "react-native";
 import colors from "../../styles/colorPallete";
+import { Ionicons } from '@expo/vector-icons';
+import ActionModal from '../ActionModal/ActionModal';
 
 // Native modules
 // Use the legacy API because downloadAsync is deprecated in the new File/Directory API.
@@ -13,9 +15,11 @@ import { BACKEND_URL } from "../../config";
 import { AuthContext } from '../../context/AuthContext';
 
 
-const FileUpload = ({onPick, value, selected, label}) => {
+const FileUpload = ({onPick, value, selected, label, onDeleted, showDelete}) => {
   const [loading, setLoading] = useState(false);
   const auth = React.useContext(AuthContext);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const onViewFile = async () => {
     try {
@@ -59,24 +63,68 @@ const FileUpload = ({onPick, value, selected, label}) => {
     }
   }
 
+  const handleDeleteConfirmed = async () => {
+    if (!value) { setShowDeleteModal(false); return; }
+    try {
+      setDeleteLoading(true);
+      const encoded = encodeURIComponent(value);
+      const resp = await api.delete(`/project/delete/${encoded}`);
+      if (!resp?.data?.ok) {
+        throw new Error(resp?.data?.error || 'Delete failed');
+      }
+      setShowDeleteModal(false);
+      if (typeof onDeleted === 'function') {
+        onDeleted(value);
+      }
+    } catch (err) {
+      console.error('delete file error', err);
+      Alert.alert('Delete Failed', err.message || String(err));
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   return (
     <View style={styles.row}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.label}>{label}</Text>
-            {selected && <Text style={styles.selected}>Selected: {selected.name || selected.uri}</Text>}
-          </View>
-          {!value && (
-          <Pressable style={styles.button} onPress={onPick}>
-            <Text style={styles.buttonText}>Choose file</Text>
-          </Pressable>
-          )}
-          {value && (
+      <View style={{ flex: 1 }}>
+        <Text style={styles.label}>{label}</Text>
+        {selected && <Text style={styles.selected}>Selected: {selected.name || selected.uri}</Text>}
+      </View>
+      {!value && (
+        <Pressable style={styles.button} onPress={onPick}>
+          <Text style={styles.buttonText}>Choose file</Text>
+        </Pressable>
+      )}
+      {value && (
+        <View style={styles.actionsWrap}>
           <Pressable style={styles.button} onPress={onViewFile} disabled={loading}>
             {loading ? <ActivityIndicator color={colors.fullwhite} /> : <Text style={styles.buttonText}>View file</Text>}
           </Pressable>
+          {auth?.user?.role === 'admin' && showDelete && (
+            <Pressable
+              style={[styles.iconBtn, (loading || deleteLoading) && styles.iconBtnDisabled]}
+              onPress={() => !(loading || deleteLoading) && setShowDeleteModal(true)}
+              disabled={loading || deleteLoading}
+              accessibilityLabel="Delete file"
+            >
+              {deleteLoading ? <ActivityIndicator size={16} color={colors.fullwhite} /> : <Ionicons name="trash" size={18} color={colors.fullwhite} />}
+            </Pressable>
           )}
         </View>
-  )
+      )}
+      <ActionModal
+        visible={showDeleteModal}
+        title="Delete File"
+        message={deleteLoading ? 'Deleting file...' : 'Are you sure you want to delete this file?'}
+        isCancel
+        isDelete
+        deleteLabel={deleteLoading ? 'Deleting...' : 'Delete'}
+        cancelLabel="Cancel"
+        onClose={() => { if (!deleteLoading) setShowDeleteModal(false); }}
+        onAction={(type) => { if (type === 'delete' && !deleteLoading) handleDeleteConfirmed(); }}
+      />
+    </View>
+  );
 }
 
 export default FileUpload;
@@ -88,6 +136,9 @@ const styles = StyleSheet.create({
   selected: { marginTop: 6, color: colors.lightGrey },
   button: { backgroundColor: colors.primary, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8 },
   buttonText: { color: colors.fullwhite, fontWeight: '600' },
+  actionsWrap: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  iconBtn: { marginLeft: 8, backgroundColor: colors.red, padding: 8, borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
+  iconBtnDisabled: { opacity: 0.6 },
 })
 
 

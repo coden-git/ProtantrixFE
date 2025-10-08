@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, Alert } from 'react-native';
 import Header from '../components/Header/header';
 import { getDocumentAsync } from 'expo-document-picker';
+import * as FileSystem from 'expo-file-system/legacy';
 import api from '../api/client';
-import { Platform } from 'react-native';
 import colors from '../styles/colorPallete';
 import { FileUpload } from '../components';
 import { useNavigation } from '@react-navigation/native';
-import {BACKEND_URL} from '../config'
 import { AuthContext } from '../context/AuthContext';
 import ActionModal from '../components/ActionModal/ActionModal';
+import { MAX_FILE_SIZE } from '../utils';
 
 
 export default function ActivityDocs({ route }) {
@@ -30,17 +30,41 @@ export default function ActivityDocs({ route }) {
   }, [uploads]);
 
 
-  const pickFor = async (item, index) => {
 
+  const pickFor = async (item, index) => {
     try {
-      const res = await getDocumentAsync({ type: item.mimeTypes, multiple: false });
+      const res = await getDocumentAsync({ type: item.mimeTypes, multiple: false, copyToCacheDirectory: true });
       if (res.canceled) return;
-      setSelected((s) => ({ ...s, [index]: res.assets[0] }));
+      const file = res.assets && res.assets[0];
+      if (!file) return;
+      let size = file.size;
+      if (size == null) {
+        try {
+          const info = await FileSystem.getInfoAsync(file.uri);
+            if (info?.exists && typeof info.size === 'number') size = info.size;
+        } catch (e) {
+          // silent fallback
+        }
+      }
+      if (typeof size === 'number' && size > MAX_FILE_SIZE) {
+        Alert.alert('File Too Large', 'Maximum allowed size is 10 MB. Please choose a smaller file.');
+        return;
+      }
+      setSelected((s) => ({ ...s, [index]: file }));
     } catch (err) {
       console.warn('Document pick error', err);
       Alert.alert('Error', 'Could not pick document');
     }
   };
+
+  const onDelete = (index) => {
+    const result = [...uploads];
+    if (result[index]) {
+      result[index].value = null;
+      setSelected((s) => ({ ...s, [index]: { ...result[index] } }));
+      onActivityChange && onActivityChange(result);
+    }
+  }
 
   const renderItem = ({ item, index }) => (
     <View style={styles.row}>
@@ -49,6 +73,8 @@ export default function ActivityDocs({ route }) {
         value={item.value}
         selected={item.value? '' : selected[index]}
         label={item.name}
+        showDelete={true}
+        onDeleted={()=> onDelete(index)}
       />
     </View>
   );
@@ -121,7 +147,7 @@ export default function ActivityDocs({ route }) {
           onPress={() => setConfirmVisible(true)}
           disabled={noFileSelected || uploading}
         >
-          {uploading ? <Text style={styles.uploadAllText}>Preparing...</Text> : <Text style={styles.uploadAllText}>Upload all</Text>}
+          {uploading ? <Text style={styles.uploadAllText}>Preparing...</Text> : <Text style={styles.uploadAllText}>Update</Text>}
         </Pressable>
       </View>
       <ActionModal

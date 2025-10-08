@@ -9,7 +9,7 @@ import { MultiSelect } from "react-native-element-dropdown";
 import { BACKEND_URL } from '../../config';
 import { AuthContext } from '../../context/AuthContext';
 import ActionModal from '../../components/ActionModal/ActionModal';
-import { formatDateTime } from '../../utils';
+import { formatDateTime, MAX_FILE_SIZE } from '../../utils';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
@@ -104,15 +104,35 @@ export default function ActivityDetail({ route }) {
 
     const pickAttachment = async () => {
         try {
-            const res = await DocumentPicker.getDocumentAsync({ copyToCacheDirectory: true, multiple: false });
+            // Allow only images and PDFs
+            const res = await DocumentPicker.getDocumentAsync({
+                multiple: false,
+                copyToCacheDirectory: true,
+                type: ['image/*', 'application/pdf']
+            });
             if (res.canceled) return;
             const file = res.assets && res.assets[0];
             if (!file) return;
+
+
+            // Size check (fallback to FileSystem if missing)
+            let size = file.size;
+            if (size == null) {
+                try {
+                    const info = await FileSystem.getInfoAsync(file.uri);
+                    if (info?.exists && typeof info.size === 'number') size = info.size;
+                } catch (_) { /* ignore */ }
+            }
+            if (typeof size === 'number' && size > MAX_FILE_SIZE) {
+                Alert.alert('File Too Large', 'Maximum allowed size is 10 MB.');
+                return;
+            }
+
             setAttachment({
                 uri: file.uri,
                 name: file.name,
-                size: file.size,
-                mimeType: file.mimeType
+                size: size,
+                mimeType: mime,
             });
         } catch (e) {
             console.warn('pickAttachment error', e);
@@ -217,12 +237,9 @@ export default function ActivityDetail({ route }) {
                 }
                 return it;
             });
+            onSave({ goBack: false, activity: next });
             return next;
         });
-        await setTimeout(() => {
-
-        }, 100);
-        await onSave({ goBack: false });
     };
 
 
@@ -231,12 +248,10 @@ export default function ActivityDetail({ route }) {
         setActivity((prev) => {
             const next = { ...prev };
             next.measurement = updatedMeasurement;
+            onSave({ goBack: false, activity: next });
             return next;
         });
-        await setTimeout(() => {
 
-        }, 100);
-        await onSave({ goBack: false })
     };
 
     const onPoChange = (updatedPo) => {
@@ -315,7 +330,7 @@ export default function ActivityDetail({ route }) {
         }
     }
 
-    const onSave = async ({ goBack = true }) => {
+    const onSave = async ({ goBack = true, activity }) => {
         // Save handler: call backend to update activity
         try {
             if (!projectId) {
@@ -601,7 +616,7 @@ export default function ActivityDetail({ route }) {
                     confirmLabel="Save"
                     cancelLabel="Cancel"
                     onClose={() => setConfirmVisible(false)}
-                    onAction={(type) => { if (type === 'confirm') onSave({ goBack: true }); }}
+                    onAction={(type) => { if (type === 'confirm') onSave({ goBack: true, activity }); }}
                 />
             </KeyboardAvoidingView>
         </View>
