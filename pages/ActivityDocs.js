@@ -9,7 +9,7 @@ import { FileUpload } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
 import ActionModal from '../components/ActionModal/ActionModal';
-import { MAX_FILE_SIZE } from '../utils';
+import { MAX_FILE_SIZE, mimeTypes } from '../utils';
 
 
 export default function ActivityDocs({ route }) {
@@ -33,7 +33,7 @@ export default function ActivityDocs({ route }) {
 
   const pickFor = async (item, index) => {
     try {
-      const res = await getDocumentAsync({ type: item.mimeTypes, multiple: false, copyToCacheDirectory: true });
+      const res = await getDocumentAsync({ type: item?.mimeTypes || mimeTypes, multiple: false, copyToCacheDirectory: true });
       if (res.canceled) return;
       const file = res.assets && res.assets[0];
       if (!file) return;

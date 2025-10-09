@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import api from '../../api/client'
 import { BACKEND_URL } from "../../config";
 import { AuthContext } from '../../context/AuthContext';
-import { MAX_FILE_SIZE } from '../../utils';
+import { MAX_FILE_SIZE, mimeTypes } from '../../utils';
 
 const ActionTable = ({ route }) => {
     const { item, updateActivity } = route.params || {};
@@ -63,7 +63,7 @@ const ActionTable = ({ route }) => {
 
     const pickFor = async (rowIndex, colIndex, item) => {
         try {
-            const res = await getDocumentAsync({ type: ['image/*', 'application/pdf'], multiple: false, copyToCacheDirectory: true });
+            const res = await getDocumentAsync({ type: mimeTypes, multiple: false, copyToCacheDirectory: true });
             if (res.canceled) return;
             const file = res.assets && res.assets[0];
             if (!file) return;

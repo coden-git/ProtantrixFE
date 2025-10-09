@@ -11,3 +11,19 @@ export const formatDateTime = (val) => {
     };
 
 export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+
+export const mimeTypes =  [
+  'application/pdf',
+  // Word
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  // Excel
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  // AutoCAD DWG (common variants)
+  'application/dwg',
+  'application/acad',
+  'application/x-acad',
+  'application/x-dwg',
+  'image/*'
+];

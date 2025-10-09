@@ -9,7 +9,7 @@ import { MultiSelect } from "react-native-element-dropdown";
 import { BACKEND_URL } from '../../config';
 import { AuthContext } from '../../context/AuthContext';
 import ActionModal from '../../components/ActionModal/ActionModal';
-import { formatDateTime, MAX_FILE_SIZE } from '../../utils';
+import { formatDateTime, MAX_FILE_SIZE, mimeTypes } from '../../utils';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
@@ -109,7 +109,7 @@ export default function ActivityDetail({ route }) {
             const res = await DocumentPicker.getDocumentAsync({
                 multiple: false,
                 copyToCacheDirectory: true,
-                type: ['image/*', 'application/pdf']
+                type: mimeTypes
             });
             if (res.canceled) return;
             const file = res.assets && res.assets[0];
