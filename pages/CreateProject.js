@@ -142,10 +142,19 @@ export default function CreateProject() {
           />
         </View>
 
-        <View style={styles.docsSection}>
+        <TouchableOpacity
+          style={styles.docsSection}
+          onPress={() => {
+            if (!isEditing) {
+              Alert.alert('Create project first', 'Please save the project before accessing Docs.');
+              return;
+            }
+            navigation.navigate('DocPage', { project: projectData });
+          }}
+        >
           <Text style={styles.docsIcon}>📄</Text>
           <Text style={styles.docsText}>Docs</Text>
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.footer}>
@@ -169,6 +178,7 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: colors.fullwhite,
+    paddingTop: 30,
   },
   header: {
     height: 56,

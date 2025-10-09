@@ -6,6 +6,7 @@ import Tabs from './navigation/Tabs';
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActionTable, ActivitiesScreen, ActivityDocs, AddPo, Measurements } from './pages';
+import DocPage from './pages/DocPage';
 import ActivityDetail from './pages/activities/ActivityDetail';
 import colors from './styles/colorPallete';
 import CreateProject from './pages/CreateProject';
@@ -50,6 +51,7 @@ function RootNavigator() {
         <Stack.Screen name="CreateProject" component={CreateProject} />
         <Stack.Screen name="AddUser" component={AddUser} />
         <Stack.Screen name="UsersList" component={UsersList} />
+        <Stack.Screen name="DocPage" component={DocPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
