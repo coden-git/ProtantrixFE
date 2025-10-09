@@ -84,7 +84,12 @@ export default function AlertsScreen() {
     }
   }, [loading, loadingMore, totalPages]);
 
-  useEffect(() => { fetchAlerts(1, false); }, [fetchAlerts]);
+  const didInit = useRef(false);
+  useEffect(() => {
+    if (didInit.current) return;
+    didInit.current = true;
+    fetchAlerts(1, false);
+  }, [fetchAlerts]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
