@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, Alert, Platform, ActivityIndicator, TextInput, KeyboardAvoidingView, ScrollView, LayoutAnimation, UIManager, Linking } from 'react-native';
 import api from '../../api/client';
 import { Ionicons } from '@expo/vector-icons';
@@ -37,6 +37,7 @@ export default function ActivityDetail({ route }) {
     const [commentsError, setCommentsError] = useState(null);
     const fetchingRef = useRef(false);
     const [viewingFileUri, setViewingFileUri] = useState(null); // track which file is loading
+    const { role, name: currentUserName } = useContext(AuthContext);
 
     if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
         UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -468,7 +469,7 @@ export default function ActivityDetail({ route }) {
                                     <Text style={styles.pillText}>Measurements</Text>
                                 </View>
                             </Pressable>
-                            {activity.poValue?.length > 0 && (
+                            {activity.poValue?.length > 0 && role==='admin' && (
                                 <Pressable style={styles.pill} onPress={() => { navigation.navigate('AddPo', { poValue: activity.poValue, onPoChange }) }}>
                                     <View style={styles.pillContent}>
                                         <Ionicons name="receipt-outline" size={16} color={colors.fullBlack} />
