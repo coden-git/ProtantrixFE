@@ -276,7 +276,7 @@ export default function AddUser() {
                 {error ? <Text style={styles.globalError}>{error}</Text> : null}
             </ScrollView>
             <View style={styles.footer}>
-                {editingUser?.isActive === true && <TouchableOpacity style={[styles.primaryBtn, !valid && styles.disabledBtn]} disabled={!valid || loading} onPress={submit} activeOpacity={0.85}>
+                {(editingUser?.isActive === true || !editingUser) && <TouchableOpacity style={[styles.primaryBtn, !valid && styles.disabledBtn]} disabled={!valid || loading} onPress={submit} activeOpacity={0.85}>
                     {loading ? <ActivityIndicator color={colors.fullwhite} /> : <Text style={styles.primaryBtnText}>{isEdit ? 'Save Changes' : 'Create User'}</Text>}
                 </TouchableOpacity>
                 }
