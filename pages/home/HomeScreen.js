@@ -8,12 +8,12 @@ import {
   SafeAreaView,
   ActivityIndicator,
   RefreshControl,
+  TextInput,
 } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../../styles/colorPallete';
 import api from '../../api/client'
-import {BACKEND_URL} from '../../config.js'
 import { AuthContext } from '../../context/AuthContext';
 
 export default function HomeScreen() {
@@ -23,8 +23,9 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const fetchProjects = useCallback(async (opts = { page: 1, limit: 100 }) => {
+  const fetchProjects = useCallback(async (opts = { page: 1, limit: 10000 }) => {
     setError(null);
     if (!opts.skipLoading) setLoading(true);
     try {
@@ -36,6 +37,7 @@ export default function HomeScreen() {
         params: { page: opts.page, limit: opts.limit }
       });
       const json = resp.data;
+      console.log('Fetched projects', opts?.skipLoading);
       if (json && json.ok && Array.isArray(json.items)) {
         setProjects(json.items);
       } else {
@@ -66,6 +68,16 @@ export default function HomeScreen() {
     fetchProjects({ page: 1, limit: 100, skipLoading: true });
   }, [fetchProjects]);
 
+  // Filter projects based on search query
+  const filteredProjects = React.useMemo(() => {
+    if (!searchQuery.trim()) return projects;
+    const query = searchQuery.toLowerCase();
+    return projects.filter(project => 
+      project.name?.toLowerCase().includes(query) || 
+      project.description?.toLowerCase().includes(query)
+    );
+  }, [projects, searchQuery]);
+
   const openActivities = (project) => {
     const parent = navigation.getParent();
     if (parent) parent.navigate('Activities', { projectId: project.uuid, projectName: project.name });
@@ -82,13 +94,17 @@ export default function HomeScreen() {
           <Text style={styles.cardTitle}>{item.name}</Text>
           <Text style={styles.cardSubtitle}>
             {item.description && item.description.length > 30 
-              ? `${item.description.substring(0, 30)}...` 
-              : item.description || ''}
+              ? `${item.description.substring(0, 30)}... ${item.status}` 
+              : `${item.description} ${item.status?.replaceAll('_', ' ')?.toLowerCase()}`}
           </Text>
         </View>
       </View>
       <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('CreateProject', { project: item })}>
-        <Text style={styles.editText}>✎</Text>
+        {auth?.user?.role === 'admin' ? (
+          <Ionicons name="create-outline" size={20} color="#333" />
+        ) : (
+          <Ionicons name="eye-outline" size={20} color="#333" />
+        )}
       </TouchableOpacity>
     </TouchableOpacity>
   );
@@ -98,13 +114,33 @@ export default function HomeScreen() {
       <View style={styles.header}>
         <View style={styles.headerSpacer} />
         <Text style={styles.headerTitle}>Projects</Text>
-        <TouchableOpacity style={styles.headerAction} onPress={() => navigation.navigate('CreateProject')}>
-          <Text style={styles.plus}>＋</Text>
-        </TouchableOpacity>
+        {auth?.user?.role === 'admin' ? (
+          <TouchableOpacity style={styles.headerAction} onPress={() => navigation.navigate('CreateProject')}>
+            <Text style={styles.plus}>＋</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.headerSpacer} />
+        )}
       </View>
 
       <View style={styles.container}>
         <Text style={styles.sectionTitle}>My Projects</Text>
+        
+        <View style={styles.searchContainer}>
+          <Ionicons name="search" size={20} color="#999" style={styles.searchIcon} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search projects..."
+            placeholderTextColor="#999"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+          {searchQuery.length > 0 && (
+            <TouchableOpacity onPress={() => setSearchQuery('')} style={styles.clearButton}>
+              <Ionicons name="close-circle" size={20} color="#999" />
+            </TouchableOpacity>
+          )}
+        </View>
 
         {loading && projects.length === 0 ? (
           <ActivityIndicator style={{ marginTop: 24 }} />
@@ -116,13 +152,20 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
         ) : (
-          <FlatList
-            data={projects}
-            keyExtractor={(i) => i._id}
-            renderItem={renderProject}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-            contentContainerStyle={{ paddingBottom: 40 }}
-          />
+          <>
+            {searchQuery.length > 0 && filteredProjects.length === 0 && projects.length > 0 && (
+              <View style={styles.noResultsContainer}>
+                <Text style={styles.noResultsText}>No projects found for "{searchQuery}"</Text>
+              </View>
+            )}
+            <FlatList
+              data={filteredProjects}
+              keyExtractor={(i) => `${i._id} + ${i?.name} + ${i?.description}`}
+              renderItem={renderProject}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+              contentContainerStyle={{ paddingBottom: 40 }}
+            />
+          </>
         )}
       </View>
     </SafeAreaView>
@@ -174,4 +217,35 @@ const styles = StyleSheet.create({
   cardSubtitle: { color: '#7e7e7e', marginTop: 2 },
   editButton: { padding: 8 },
   editText: { fontSize: 18, color: '#333' },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8f8f8',
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  searchIcon: {
+    marginRight: 8,
+  },
+  searchInput: {
+    flex: 1,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: '#333',
+  },
+  clearButton: {
+    padding: 4,
+  },
+  noResultsContainer: {
+    padding: 20,
+    alignItems: 'center',
+  },
+  noResultsText: {
+    fontSize: 16,
+    color: '#999',
+    fontStyle: 'italic',
+  },
 });

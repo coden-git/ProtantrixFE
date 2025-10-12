@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useCallback, useRef, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, RefreshControl, TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import api from '../../api/client';
 import { Header } from '../../components';
 import colors from '../../styles/colorPallete';
 import { AuthContext } from '../../context/AuthContext';
+import ActionModal from '../../components/ActionModal/ActionModal';
 
 export default function AlertsScreen() {
   const [alerts, setAlerts] = useState([]);
@@ -13,18 +15,21 @@ export default function AlertsScreen() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
+  const [decisionError, setDecisionError] = useState(null);
   const [actioningUuid, setActioningUuid] = useState(null); // uuid currently being approved/rejected
   const [actioningStatus, setActioningStatus] = useState(null); // target status (COMPLETED/REJECTED)
   const pageSizeRef = useRef(100); // fixed page size from backend
   const { role, name: currentUserName } = useContext(AuthContext);
 
   const handleDecision = useCallback(async (uuid, status) => {
+    setDecisionError(null);
     if (!uuid || !status) return;
     setActioningUuid(uuid);
     setActioningStatus(status);
     try {
       const res = await api.post(`/alerts/approve-reject/${uuid}?status=${status}`);
       if (res?.data?.ok) {
+        console.log('Alert action success', res?.data);
         // Prefer server returned alert if provided
         const updated = res.data.alert || res.data.updated || null;
         setAlerts(prev => prev.map(a => {
@@ -41,10 +46,12 @@ export default function AlertsScreen() {
         }));
       } else {
         // Optionally set error toast or message
-        setError(res?.data?.error || 'Action failed');
+        console.log('Alert action error', res?.data);
+        setDecisionError(res?.data?.error || 'Action failed');
       }
     } catch (err) {
-      setError(err?.response?.data?.error || err.message || 'Network error');
+        console.log('Alert action error', err?.response?.data?.error);
+      setDecisionError(err?.response?.data?.error || err.message || 'Network error');
     } finally {
       setActioningUuid(null);
       setActioningStatus(null);
@@ -73,16 +80,16 @@ export default function AlertsScreen() {
           return merged;
         });
       } else {
-        setError(res?.data?.error || 'Unexpected response');
+        setDecisionError(res?.data?.error || 'Unexpected response');
       }
     } catch (err) {
-      setError(err?.response?.data?.error || err.message || 'Network error');
+      setDecisionError(err?.response?.data?.error || err.message || 'Network error');
     } finally {
       setLoading(false);
       setLoadingMore(false);
       setRefreshing(false);
     }
-  }, [loading, loadingMore, totalPages]);
+  }, []);
 
   const didInit = useRef(false);
   useEffect(() => {
@@ -90,6 +97,13 @@ export default function AlertsScreen() {
     didInit.current = true;
     fetchAlerts(1, false);
   }, [fetchAlerts]);
+
+  // Refetch alerts when screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      fetchAlerts(1, false);
+    }, [fetchAlerts])
+  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -108,7 +122,7 @@ export default function AlertsScreen() {
     return (
       <View style={styles.alertItem}>
         <View style={styles.alertHeaderRow}>
-          <Text style={styles.alertType}>{item.type?.replace('_', ' ')}</Text>
+          <Text style={styles.alertType}>{item.type?.replaceAll('_', ' ')}</Text>
           <Text style={[styles.status, styles['status_' + (item.status || '').toLowerCase()]]}>{item.status}</Text>
         </View>
         <Text style={styles.alertText} numberOfLines={3}>{item.alertText}</Text>
@@ -199,6 +213,15 @@ export default function AlertsScreen() {
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         />
       )}
+      <ActionModal
+        visible={!!decisionError}
+        title="Action Failed"
+        message={decisionError}
+        isConfirm
+        confirmLabel="OK"
+        onClose={() => setDecisionError(null)}
+        onAction={() => setDecisionError(null)}
+      />
     </View>
   );
 }

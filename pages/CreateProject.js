@@ -29,6 +29,7 @@ export default function CreateProject() {
   const projectData = route.params?.project;
   const isEditing = !!projectData;
   const auth = React.useContext(AuthContext);
+  const isAdmin = auth?.user?.role === 'admin';
   
   const [formData, setFormData] = useState({
     name: '',
@@ -94,7 +95,9 @@ export default function CreateProject() {
         <TouchableOpacity style={styles.headerBack} onPress={() => navigation.goBack()}>
           <Text style={styles.closeIcon}>✕</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>{isEditing ? 'Edit Project' : 'Add Project'}</Text>
+        <Text style={styles.headerTitle}>
+          {!isAdmin ? 'View Project' : (isEditing ? 'Edit Project' : 'Add Project')}
+        </Text>
         <View style={styles.headerSpacer} />
       </View>
 
@@ -102,33 +105,34 @@ export default function CreateProject() {
         <View style={styles.field}>
           <Text style={styles.label}>Project Name</Text>
           <TextInput
-            style={[styles.input, isEditing && styles.inputDisabled]}
+            style={[styles.input, (isEditing || !isAdmin) && styles.inputDisabled]}
             placeholder="Enter project name"
             placeholderTextColor="#999"
             value={formData.name}
-            onChangeText={isEditing ? undefined : (text) => setFormData(prev => ({ ...prev, name: text }))}
-            editable={!isEditing}
+            onChangeText={(isEditing || !isAdmin) ? undefined : (text) => setFormData(prev => ({ ...prev, name: text }))}
+            editable={!isEditing && isAdmin}
           />
         </View>
 
         <View style={styles.field}>
           <Text style={styles.label}>Description</Text>
           <TextInput
-            style={[styles.input, styles.textArea]}
+            style={[styles.input, styles.textArea, !isAdmin && styles.inputDisabled]}
             placeholder="Enter project description (max 30 character)"
             placeholderTextColor="#999"
             multiline
             numberOfLines={4}
             // maxLength={30}
             value={formData.description}
-            onChangeText={(text) => setFormData(prev => ({ ...prev, description: text }))}
+            onChangeText={isAdmin ? (text) => setFormData(prev => ({ ...prev, description: text })) : undefined}
+            editable={isAdmin}
           />
         </View>
 
         <View style={styles.field}>
           <Text style={styles.label}>Project Status</Text>
           <Dropdown
-            style={styles.dropdown}
+            style={[styles.dropdown, !isAdmin && styles.dropdownDisabled]}
             placeholderStyle={styles.dropdownPlaceholder}
             selectedTextStyle={styles.dropdownSelected}
             iconStyle={styles.dropdownIcon}
@@ -138,7 +142,8 @@ export default function CreateProject() {
             valueField="value"
             placeholder="Select status"
             value={formData.status}
-            onChange={(item) => setFormData(prev => ({ ...prev, status: item.value }))}
+            onChange={isAdmin ? (item) => setFormData(prev => ({ ...prev, status: item.value })) : undefined}
+            disable={!isAdmin}
           />
         </View>
 
@@ -157,19 +162,21 @@ export default function CreateProject() {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.footer}>
-        <TouchableOpacity
-          style={[styles.saveButton, !isFormValid && styles.saveButtonDisabled]}
-          onPress={handleSave}
-          disabled={!isFormValid || saving}
-        >
-          {saving ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.saveButtonText}>{isEditing ? 'Update' : 'Save'}</Text>
-          )}
-        </TouchableOpacity>
-      </View>
+      {isAdmin && (
+        <View style={styles.footer}>
+          <TouchableOpacity
+            style={[styles.saveButton, !isFormValid && styles.saveButtonDisabled]}
+            onPress={handleSave}
+            disabled={!isFormValid || saving}
+          >
+            {saving ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.saveButtonText}>{isEditing ? 'Update' : 'Save'}</Text>
+            )}
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -283,5 +290,8 @@ const styles = StyleSheet.create({
   inputDisabled: {
     backgroundColor: '#f0f0f0',
     color: '#666',
+  },
+  dropdownDisabled: {
+    backgroundColor: '#f0f0f0',
   },
 });

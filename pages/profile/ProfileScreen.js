@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import colors from '../../styles/colorPallete';
 import { AuthContext } from '../../context/AuthContext';
 import Header from '../../components/Header/header';
@@ -21,7 +21,7 @@ export default function ProfileScreen({ navigation }) {
   const isAdmin = role === 'admin';
 
   return (
-    <View style={styles.root}>
+    <ScrollView style={styles.root}>
       <Header title="Profile" enableBackButton={true} />
       <View style={styles.scrollArea}>
         <View style={styles.avatarWrapper}>
@@ -48,11 +48,13 @@ export default function ProfileScreen({ navigation }) {
         {Array.isArray(user?.projects) && user.projects.length > 0 && (
           <View style={styles.projectsSection}>
             <Text style={styles.sectionTitle}>Projects</Text>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
             {user.projects.map(p => (
               <View style={styles.projectPill} key={p.uuid}>
                 <Text style={styles.projectText}>{p.name}</Text>
               </View>
             ))}
+            </View>
           </View>
         )}
 
@@ -69,7 +71,7 @@ export default function ProfileScreen({ navigation }) {
           <Text style={styles.logoutText}>Log Out</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -97,6 +99,6 @@ const styles = StyleSheet.create({
   adminSection: { marginBottom: 32 },
   adminButton: { backgroundColor: colors.primary, paddingVertical: 14, borderRadius: 10, alignItems: 'center', marginBottom: 8 },
   adminButtonText: { color: '#fff', fontSize: 15, fontWeight: '600' },
-  logoutBtn: { marginTop: 'auto', backgroundColor: colors.red, paddingVertical: 14, borderRadius: 10, alignItems: 'center' },
-  logoutText: { color: '#fff', fontSize: 16, fontWeight: '700' },
+  logoutBtn: { marginTop: 'auto', backgroundColor: colors.red, paddingVertical: 14, borderRadius: 10, alignItems: 'center', marginBottom: 20 },
+  logoutText: { color: '#fff', fontSize: 16, fontWeight: '700'},
 });

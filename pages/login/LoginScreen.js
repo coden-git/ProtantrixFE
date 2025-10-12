@@ -60,7 +60,7 @@ const Login = ({ onLoginSuccess }) => {
         onLoginSuccess(user);
       }
     } catch (e) {
-      setError(e.message || 'Login error');
+      setError('Unable to login, please check password and try again');
     } finally {
       setLoading(false);
     }

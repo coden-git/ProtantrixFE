@@ -156,7 +156,14 @@ const TableMeasurment = ({ measurement, setMeasurement }) => {
                 <View style={{ marginTop: 12 }}><Text style={styles.label}>Final total: {finalTotal}</Text></View>
             )}
             {measurement.finalTotal === 'name' && (
-                <View style={{ marginTop: 12 }}><Text style={styles.label}>Final total: {JSON.stringify(finalTotal)}</Text></View>
+                <View style={{ marginTop: 12 }}>
+                    <Text style={styles.label}>Final total:</Text>
+                    {Object.entries(finalTotal || {}).map(([key, value]) => (
+                        <Text key={key} style={styles.totalItem}>
+                            {key}: {value}
+                        </Text>
+                    ))}
+                </View>
             )}
         </ScrollView>
     )
@@ -188,4 +195,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     dropdownDisabled: { backgroundColor: '#f5f5f5', borderColor: colors.offWhite },
+    totalItem: { fontSize: 14, color: colors.fullBlack, marginLeft: 10, marginTop: 4 },
 });

@@ -282,9 +282,11 @@ export default function FolderTree({
                 )}
               </Pressable>
             )}
-            <Pressable style={styles.iconBtn} onPress={() => startCreateFolder(pathStr)}>
-              <Ionicons name="add" size={16} color={colors.fullwhite} />
-            </Pressable>
+            {isAdmin && (
+              <Pressable style={styles.iconBtn} onPress={() => startCreateFolder(pathStr)}>
+                <Ionicons name="add" size={16} color={colors.fullwhite} />
+              </Pressable>
+            )}
           </View>
           {isCreatingHere && (
             <View style={styles.createRow}>
@@ -375,9 +377,11 @@ export default function FolderTree({
             )}
           </Pressable>
         )}
-        <Pressable style={styles.iconBtn} onPress={() => startCreateFolder('')}>
-          <Ionicons name="add" size={16} color={colors.fullwhite} />
-        </Pressable>
+        {isAdmin && (
+          <Pressable style={styles.iconBtn} onPress={() => startCreateFolder('')}>
+            <Ionicons name="add" size={16} color={colors.fullwhite} />
+          </Pressable>
+        )}
       </View>
       {creatingAt === '' && (
         <View style={styles.createRow}>

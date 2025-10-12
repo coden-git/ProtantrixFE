@@ -133,7 +133,7 @@ export default function ActivityDetail({ route }) {
                 uri: file.uri,
                 name: file.name,
                 size: size,
-                mimeType: mime,
+                mimeType: file.mimeType,
             });
         } catch (e) {
             console.warn('pickAttachment error', e);
@@ -144,7 +144,7 @@ export default function ActivityDetail({ route }) {
     const updateActivity = (index, newVal) => {
         setActivity((prev) => {
             const next = { ...prev };
-            next.checkLists = prev.checkLists.map((it, i) => (i === index ? { ...it, value: newVal } : it));
+            next.checkLists = prev.checkLists.map((it, i) => (i === index ? { ...it, value: newVal, createdBy: { id: auth?.user?._id, name: auth?.user?.name }, createdOn: new Date() } : it));
             return next;
         });
     };
@@ -152,7 +152,7 @@ export default function ActivityDetail({ route }) {
     const renderChecklist = ({ item, index }) => {
         if ((item.type || '').toLowerCase() === 'dropdown') {
             return (
-                <View>
+                <View style={{display:'flex'}}>
                     <Text style={styles.label}>{item.name}</Text>
                     <MultiSelect
                         style={styles.dropdown}
@@ -176,6 +176,13 @@ export default function ActivityDetail({ route }) {
                             </View>
                         )}
                     />
+                    {role === 'admin' && item.createdBy?.name && (
+                        <View style={styles.createdByContainer}>
+                            <Text style={styles.createdByText}>
+                                Created by: {item.createdBy.name} {item.createdOn ? `on ${formatDateTime(item.createdOn)}` : ''}
+                            </Text>
+                        </View>
+                    )}
                 </View>
             );
         }
@@ -188,6 +195,14 @@ export default function ActivityDetail({ route }) {
                         disabled={item.disabled === true}
                         onClick={(v) => item.disabled === true ? null : updateActivity(index, v)}
                     />
+                    {role === 'admin' && item.createdBy?.name && (
+                        <View style={styles.createdByContainer}>
+                            <Text style={styles.createdByText}>
+                                Created by: {item.createdBy.name} {item.createdOn ? `on ${formatDateTime(item.createdOn)}` : ''}
+                            </Text>
+                        </View>
+                    )}
+
                 </View>
             );
         }
@@ -198,6 +213,13 @@ export default function ActivityDetail({ route }) {
                     <View style={{ flex: 1 }}>
                         <Text style={styles.label}>{item.name}</Text>
                         {item.meta ? <Text style={styles.itemMeta}>{item.meta}</Text> : null}
+                        {role === 'admin' && item.createdBy?.name && (
+                            <View style={styles.createdByContainer}>
+                                <Text style={styles.createdByText}>
+                                    Created by: {item.createdBy.name} {item.createdOn ? `on ${formatDateTime(item.createdOn)}` : ''}
+                                </Text>
+                            </View>
+                        )}
                     </View>
                 </Pressable>
             );
@@ -206,13 +228,20 @@ export default function ActivityDetail({ route }) {
         if ((item?.type || '').toLowerCase() === 'daterange') {
             // value expected shape: { from: '', to: '' }
             return (
-                <View>
+                <View style={{display:'flex'}}>
                     <Text style={styles.label}>{item.name}</Text>
                     <DateRange
                         value={item.value || { from: '', to: '' }}
                         disabled={item.disabled === true}
                         onChange={(val) => item.disabled === true ? null : updateActivity(index, val)}
                     />
+                    {role === 'admin' && item.createdBy?.name && (
+                        <View style={styles.createdByContainer}>
+                            <Text style={styles.createdByText}>
+                                Created by: {item.createdBy.name} {item.createdOn ? `on ${formatDateTime(item.createdOn)}` : ''}
+                            </Text>
+                        </View>
+                    )}
                 </View>
             );
         }
@@ -234,7 +263,7 @@ export default function ActivityDetail({ route }) {
                 const match = updatedActivities.find((u) => (u.id !== undefined && it.id !== undefined && String(u.id) === String(it.id)));
                 if (match) {
                     // merge uploaded data onto the checklist item (e.g., set value or store file metadata)
-                    return { ...it, ...match };
+                    return { ...it, ...match, createdBy: { id: auth?.user?._id, name: auth?.user?.name }, createdOn: new Date() };
                 }
                 return it;
             });
@@ -260,6 +289,7 @@ export default function ActivityDetail({ route }) {
         setActivity((prev) => {
             const next = { ...prev };
             next.poValue = updatedPo;
+            onSave({ goBack: false, activity: next });
             return next;
         });
     };
@@ -631,7 +661,7 @@ const styles = StyleSheet.create({
     scroll: { flex: 1 },
     scrollContent: { paddingLeft: 0, paddingTop: 8, paddingBottom: 32 },
     subtitle: { fontSize: 16, fontWeight: '600', color: colors, marginTop: 6 },
-    checkItem: { paddingVertical: 12, paddingHorizontal: 8, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+    checkItem: { paddingVertical: 12, paddingHorizontal: 8, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center' },
     checkName: { fontSize: 16 },
     checkType: { color: colors.lightGrey },
     sep: { height: 1, backgroundColor: colors.offWhite },
@@ -686,7 +716,7 @@ const styles = StyleSheet.create({
     itemMeta: { fontSize: 12, color: colors.lightGrey, marginTop: 4 },
     selectedItemContent: { flexDirection: 'column' },
     selectedMetaText: { color: colors.fullwhite, fontSize: 12, marginTop: 2 },
-    tableRow: { paddingVertical: 12, paddingHorizontal: 10, borderRadius: 8, backgroundColor: colors.fullwhite },
+    tableRow: { paddingVertical: 12, paddingHorizontal: 10, borderRadius: 8, backgroundColor: colors.fullwhite, display: 'flex' },
     bottomSpacer: { height: 40 }
     , commentsListWrapper: { marginTop: 16 },
     commentsLoadingRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
@@ -711,6 +741,8 @@ const styles = StyleSheet.create({
     clearAttachment: { marginLeft: 4 },
     commentFileRow: { flexDirection: 'row', alignItems: 'center', marginTop: 6 },
     inlineLoader: { marginLeft: 6 },
+    createdByContainer: { marginTop: 4, display: 'flex', alignItems: 'flex-start' },
+    createdByText: { fontSize: 11, color: colors.lightGrey, fontStyle: 'italic' },
 
 });
 
