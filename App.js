@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Login from './pages/login/LoginScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import Tabs from './navigation/Tabs';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActionTable, ActivitiesScreen, ActivityDocs, AddPo, Measurements } from './pages';
 import DocPage from './pages/DocPage';
@@ -13,10 +13,18 @@ import CreateProject from './pages/CreateProject';
 import AddUser from './pages/AddUser';
 import UsersList from './pages/UsersList';
 import { AuthProvider, AuthContext } from './context/AuthContext';
+import { SplashScreen } from './components';
 const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
   const auth = React.useContext(AuthContext);
+  const [showSplash, setShowSplash] = useState(true);
+
+  // Show splash screen
+  if (showSplash) {
+    return <SplashScreen onFinish={() => setShowSplash(false)} />;
+  }
+
   // While loading stored credentials
   if (auth.loading) {
     return (
